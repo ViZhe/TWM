@@ -1,0 +1,38 @@
+
+#### База ####
+meteor-base
+# Include:
+# 	meteor
+# 	webapp
+# 	underscore
+# 	hot-code-push
+# 	ddp
+
+mongo
+session
+templating
+spiderable # Генерация HTML на стороне клиента. Нуждается в `sudo apt-get install phantomjs`
+
+#### Препроцессоры ####
+vizhe:stylus
+coffeescript
+mquandalle:jade
+#standard-minifiers
+
+#iron:router # Маршрутизация
+kadira:flow-router
+kadira:blaze-layout
+kadira:debug
+arillo:flow-router-helpers
+
+
+#### Работа с пользователями ###
+accounts-base
+accounts-password
+
+#### Инструменты ###
+jquery # Подключает jQuery
+check # Для проверки входящих данных
+random # Генирирует случайные строки
+sha # Шифрование
+###########################
