@@ -1,0 +1,41 @@
+
+template(name="aside")
+    aside.b-aside
+        .b-aside-user
+            a(href=""): img.b-aside-user__image(src="http://image.shutterstock.com/display_pic_with_logo/1364107/306526304/stock-vector-cats-cartoon-vector-seamless-wallpaper-306526304.jpg")
+            .b-aside-user__name Железцов Виктор
+            .b-aside-user__logout.js-aside-user__logout Выйти
+        .b-aside-btn
+            a.b-aside-btn__add(href='#') Добавить
+            .b-aside-btn__list
+                a.b-aside-btn__link(href="/task/add") Задачу
+                a.b-aside-btn__link(href="/project/add") Проект
+                //- a.b-aside-btn__link(href="/client/add") Клиента
+        
+        .b-aside-nav            
+            .b-aside-nav__item
+                a.b-aside-nav__link.b-aside-nav__link_active(href="/")
+                    .b-aside-nav__icon.b-aside-nav__icon_home
+                    | Рабочий стол
+            .b-aside-nav__item
+                a.b-aside-nav__link(href="/")
+                    .b-aside-nav__icon.b-aside-nav__icon_home
+                    | Рабочий стол
+                
+            .b-aside-nav__item
+                a.b-aside-nav__group.js-aside-nav__group(href="#")
+                    .b-aside-nav__icon.b-aside-nav__icon_project
+                    | Проекты
+                .b-aside-nav__inner-list
+                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
+                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
+                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
+                     
+            .b-aside-nav__item
+                a.b-aside-nav__group.b-aside-nav__group_open.js-aside-nav__group(href="#")
+                    .b-aside-nav__icon.b-aside-nav__icon_task
+                    | Задачи
+                .b-aside-nav__inner-list 
+                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
+                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
+                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол

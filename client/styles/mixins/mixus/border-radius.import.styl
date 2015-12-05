@@ -1,0 +1,16 @@
+
+/**
+ * Border-radius
+ *
+ * border-radius()            => border-radius:3px
+ * border-radius 50%          => border-radius:50%
+ * border-radius 0 5px        => border-radius:0 5px
+ *
+ */
+
+border-radius()
+    if length(arguments)
+        border-radius arguments
+
+    else if $siteBorderRadius
+        border-radius $siteBorderRadius

@@ -1,0 +1,12 @@
+
+/**
+ * Gradient
+ *
+ * gradient(180deg, red, green)
+ * gradient(270deg, red, green 50%, blue)
+ *
+ */
+
+gradient($direction, $colors...)
+    background $colors[0][0]
+    background linear-gradient($direction, unquote(join(', ', $colors)))

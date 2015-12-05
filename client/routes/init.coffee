@@ -4,7 +4,7 @@ BlazeLayout.setRoot 'body'
 
 FlowRouter.notFound =
     action: ->
-        BlazeLayout.render 'application', content: 'notFound'
+        BlazeLayout.render 'notFound'
 
 
 FlowRouter.triggers.enter [ (context, redirect) ->

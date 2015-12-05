@@ -1,0 +1,64 @@
+
+.b-aside-btn
+    relative()
+    margin 20px 30px
+
+.b-aside-btn__add
+    relative()
+    display block
+    padding 10px 45px 10px 20px
+    background-color $green
+    border-radius()
+    transition background-color ease .5s
+    cursor pointer
+    color $black !important
+    text-decoration none !important
+
+    &:hover
+    &:focus
+        background-color lighten(@background-color, 20%)
+
+    &:hover::after
+        transform rotate(360deg)
+
+.b-aside-btn__add:focus
+    border-radius 3px 3px 0 0
+
+.b-aside-btn__add::after
+    absolute right 20px top bottom
+    display inline-block
+    margin auto
+    size 20px
+    transition all ease .5s
+    background-image url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAUklEQVRYhe3UIQoAIBBE0TmY0Wb2HnYxe2ztapqgIH9h6uellbxLksayYLYAAAAAAAAAZWP9AGhmawvdHoD3gGisHkLFbFn31x8AAAAAAABPARMyyw5PGuJ7sAAAAABJRU5ErkJggg==")
+    background-size 100% 100%
+    background-repeat no-repeat
+    content ''
+
+.b-aside-btn__list
+    absolute top 100% left right
+    visibility hidden
+    border-radius 0 0 3px 3px
+    background-color $white
+    transition all ease .5s
+    opacity 0
+
+    .b-aside-btn__add_open + &
+        visibility visible
+        opacity 1
+
+.b-aside-btn__link
+    display block
+    padding 5px 20px
+    border-bottom 1px solid $gray
+    color $black
+
+    &:hover
+    &:focus
+        background-color $graylight
+        color $black
+        text-decoration none
+
+.b-aside-btn__link:last-child
+    border-bottom 0 none
+    border-radius 0 0 3px 3px
