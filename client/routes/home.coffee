@@ -4,5 +4,3 @@ FlowRouter.route '/',
     action: ->
         BlazeLayout.render 'application',
             content: 'home'
-            data:
-                headerBig: true

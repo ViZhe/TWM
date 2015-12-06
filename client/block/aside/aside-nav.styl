@@ -1,21 +1,16 @@
 
-$asideLinkColorHover = #505390
+$asideLinkColorHover = #5D64E5
+$asideLinkColorActive = #34387F
 
 // .b-aside-nav
 //     background url("") 0px 0px no-repeat
 
 .b-aside-nav__item
-    font-size 14px
     cursor pointer
 
-    // &:hover
-    // &:focus
-    //     background-color lighten($bluedark, 5%)
-
 .b-aside-nav__link
-.b-aside-nav__group
     display block
-    padding 5px 10px 5px 30px
+    padding 10px 10px 10px 30px
     color $white !important
     text-decoration none !important
 
@@ -23,28 +18,9 @@ $asideLinkColorHover = #505390
     &:focus
         background-color $asideLinkColorHover
 
-
-.b-aside-nav__link_inner
-    padding-left 70px
-
 .b-aside-nav__link_active
-    background-color $black !important
-    background-color lighten($bluedark, 20%) !important
+    background-color $asideLinkColorActive !important
     cursor default
-
-.b-aside-nav__group_open
-    background-color darken($bluedark, 70%)
-
-.b-aside-nav__inner-list
-    display none
-
-.b-aside-nav__group_open + .b-aside-nav__inner-list
-    display block
-    background-color darken($bluedark, 50%)
-
-
-.b-aside-nav__inner-list
-    font-size 12px
 
 
 .b-aside-nav__icon

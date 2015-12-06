@@ -5,5 +5,8 @@ template(name="application")
             +aside
             
         .application__main
-            header.application__header(style="background-color: green;") 1
-            section.application__content(style="background-color: red;") 2
+            .application__header
+                +header
+            .application__content
+                +Template.dynamic template=content
+                

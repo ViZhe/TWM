@@ -2,7 +2,7 @@
 template(name="aside")
     aside.b-aside
         .b-aside-user
-            a(href=""): img.b-aside-user__image(src="http://image.shutterstock.com/display_pic_with_logo/1364107/306526304/stock-vector-cats-cartoon-vector-seamless-wallpaper-306526304.jpg")
+            a(href="/settings"): img.b-aside-user__image(src="http://image.shutterstock.com/display_pic_with_logo/1364107/306526304/stock-vector-cats-cartoon-vector-seamless-wallpaper-306526304.jpg")
             .b-aside-user__name Железцов Виктор
             .b-aside-user__logout.js-aside-user__logout Выйти
         .b-aside-btn
@@ -18,24 +18,26 @@ template(name="aside")
                     .b-aside-nav__icon.b-aside-nav__icon_home
                     | Рабочий стол
             .b-aside-nav__item
-                a.b-aside-nav__link(href="/")
+                a.b-aside-nav__link(href="/projects")
                     .b-aside-nav__icon.b-aside-nav__icon_home
-                    | Рабочий стол
+                    | Проекты
                 
             .b-aside-nav__item
-                a.b-aside-nav__group.js-aside-nav__group(href="#")
-                    .b-aside-nav__icon.b-aside-nav__icon_project
-                    | Проекты
-                .b-aside-nav__inner-list
-                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
-                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
-                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
+                a.b-aside-nav__link(href="/tasks")
+                    .b-aside-nav__icon.b-aside-nav__icon_home
+                    | Задачи
+                    
+            .b-aside-nav__item
+                a.b-aside-nav__link(href="/clients")
+                    .b-aside-nav__icon.b-aside-nav__icon_home
+                    | Клиенты ?*
+                    
+            .b-aside-nav__item
+                a.b-aside-nav__link(href="/company")
+                    .b-aside-nav__icon.b-aside-nav__icon_home
+                    | Компания
                      
             .b-aside-nav__item
-                a.b-aside-nav__group.b-aside-nav__group_open.js-aside-nav__group(href="#")
-                    .b-aside-nav__icon.b-aside-nav__icon_task
-                    | Задачи
-                .b-aside-nav__inner-list 
-                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
-                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
-                     a.b-aside-nav__link.b-aside-nav__link_inner(href="/") Рабочий стол
+                a.b-aside-nav__link(href="/settings")
+                    .b-aside-nav__icon.b-aside-nav__icon_home
+                    | Личный кабинет
