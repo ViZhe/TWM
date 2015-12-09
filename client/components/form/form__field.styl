@@ -1,0 +1,59 @@
+
+/**
+ * Field:
+ * `.c-form__field` — Класс для текстовых полей и textarea.
+ *
+ * `.c-form__field_textarea` — Модификатор textarea.
+ *
+ * `.c-form__field_valid` — Модификатор валидного поля.
+ *
+ * `.c-form__field_invalid` — Модификатор поля с ошибкой.
+ *
+ *
+ *		@example.padded
+ *		label.c-form__label Инпут
+ *			input.c-form__field(type="text", placeholder="Simple text input",  required)
+ *		label.c-form__label Текстовая область
+ *			textarea.c-form__field.c-form__field_textarea(placeholder="Simple textarea")
+ *		label.c-form__label Инпут валидный
+ *			input.c-form__field.c-form__field_valid(type="text", placeholder="Simple text input")
+ *		label.c-form__label Инпут с ошибкой
+ *			input.c-form__field.c-form__field_invalid(type="text", placeholder="Simple text input")
+ *		label.c-form__label Инпут неактивный
+ *			input.c-form__field(type="text", placeholder="Simple text input", disabled)
+ *
+ */
+
+.c-form__field
+    margin-top 5px
+    padding 5px
+    width 100%
+    border 1px solid $graylight
+    background rgba($black, .03)
+    box-shadow 0 1px 1px 0 rgba($black, .05) inset
+    color $black
+    transition border-color .3s ease-in-out
+    border-radius()
+
+    &:not(:disabled):hover
+        border-color $gray
+
+    &:focus
+        border-color $blue !important
+        box-shadow none
+
+.c-form__field_textarea
+    min-width 100%
+    min-height 50px
+    max-width 100%
+    resize vertical
+
+
+.c-form__field:disabled
+    background-color lighten($graylight, 70%)
+
+.c-form__field_valid
+    border-color $green
+
+.c-form__field_invalid
+    border-color $red

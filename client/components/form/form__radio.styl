@@ -1,0 +1,41 @@
+
+/**
+ * Radio:
+ * `.c-form__radio` — Класс на label, чтобы иконка приняла нужный вид.
+ *
+ * `.c-form__radio_checked` — Модификатор выбранного состояния.
+ *
+ *
+ *		@example.padded
+ *		form.c-form
+ *			label.c-form__label
+ *				input(type="radio", name="radioName2")
+ *				.c-form__radio Первый radio
+ *			label.c-form__label
+ *				input(type="radio", name="radioName2", checked)
+ *				.c-form__radio Второй radio (активный)
+ *			label.c-form__label
+ *				input(type="radio", name="radioName2", disabled)
+ *				.c-form__radio Третий radio (отключен)
+ *
+ */
+
+.c-form__radio
+    background-image svg('public/img/form/form__radio_off.svg', '[fill]:' + $black)
+
+input:not(:disabled) + .c-form__radio:hover
+    background-image svg('public/img/form/form__radio_off.svg', '[fill]:' + $red)
+
+
+input:checked + .c-form__radio
+    background-image svg('public/img/form/form__radio_on.svg', '[fill]:' + $blue)
+
+input:checked + .c-form__radio:hover
+    background-image svg('public/img/form/form__radio_on.svg', '[fill]:' + $red)
+
+
+input:disabled + .c-form__radio
+    background-image svg('public/img/form/form__radio_off.svg', '[fill]:' + $gray)
+
+input:checked:disabled + .c-form__radio
+    background-image svg('public/img/form/form__radio_on.svg', '[fill]:' + $gray)

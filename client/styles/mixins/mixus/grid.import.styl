@@ -1,4 +1,13 @@
 
+$gridContainerWidthLg = 1240px
+$gridContainerWidthMd = 980px
+$gridContainerWidthSm = 750px
+$gridContainerWidthX = 100%
+$gridColPaddingLg = 15px
+$gridColPaddingSm = 10px
+$gridColPaddingX = 5px
+
+
 -grid($postfix = '')
     if $postfix
         $postfix = '_' + $postfix
@@ -22,7 +31,7 @@ $grid()
 
 
     .container
-        width 1240px
+        width $gridContainerWidthLg
 
     .row .row
         margin-right -15px
@@ -37,14 +46,14 @@ $grid()
 
     +media('in', 'md')
         .container
-            width 980px
+            width $gridContainerWidthMd
 
         -grid('md')
 
 
     +media('in', 'sm')
         .container
-            width 750px
+            width $gridContainerWidthSm
 
         .row .row
             margin-right -10px
@@ -59,7 +68,7 @@ $grid()
 
     +media('max', 'xl')
         .container
-            width 100%
+            width $gridContainerWidthX
 
         .row .row
             margin-right -5px

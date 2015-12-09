@@ -1,0 +1,83 @@
+
+/***
+ * Form:
+ * Формы.
+ *
+ * `.c-form` — Базовый класс тега form.
+ *
+ */
+
+.c-form
+    display block
+    margin-top -15px
+
+
+/**
+ * Label:
+ * `.c-form__label` — Класс для всех label-ов.
+ *
+ * `.c-form__label_disabled` — Отключаем элемент, нужен `disabled` для внутреннего input-а.
+ *
+ *
+ *		@example.padded
+ *		form.c-form
+ *			label.c-form__label Инпут
+ *				input.c-form__field(type="text", placeholder="Simple text input")
+ *			label.c-form__label Инпут
+ *				input.c-form__field(type="text", placeholder="Simple text input", disabled)
+ *
+ */
+
+.c-form__label
+    display block
+    margin-top 15px
+
+.c-form__label_space_middle:not(:first-of-type)
+    margin-top 10px
+
+.c-form__label_space_small:not(:first-of-type)
+    margin-top 5px
+
+.c-form__label_disabled
+    color $gray
+    cursor default
+
+    &::before
+        color @color !important
+
+
+.c-form__radio
+.c-form__checkbox
+    padding-left 23px
+    background-position left center
+    background-size 15px
+    background-repeat no-repeat
+
+.c-form__label input[type='radio']
+.c-form__label input[type='checkbox']
+    fixed -100% false false
+    visibility hidden
+
+
+/**
+ * Group:
+ * `.c-form__group` — Объединяет группу элементов формы.
+ *
+ *
+ *		@example.padded
+ *		form.c-form
+ *			.c-form__group
+ *				label.c-form__label Имя
+ *					input.c-form__field(type="text", placeholder="Simple text input")
+ *				label.c-form__label Фамилия
+ *					input.c-form__field(type="text", placeholder="Simple text input")
+ *			.c-form__group
+ *				label.c-form__label Пол
+ *					input.c-form__field(type="text", placeholder="Simple text input")
+ *				label.c-form__label Возраст
+ *					input.c-form__field(type="text", placeholder="Simple text input")
+ *
+ */
+
+.c-form__group:not(:last-of-type)
+    margin-bottom 30px

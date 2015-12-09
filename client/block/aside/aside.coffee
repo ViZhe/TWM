@@ -20,3 +20,6 @@ Template.aside.events
 
     'focusout .b-aside-btn__link': (e, template) ->
         $('.b-aside-btn__add_open').removeClass 'b-aside-btn__add_open'
+
+    'click .b-aside-btn__link': (e, template) ->
+        $(e.target).blur()
