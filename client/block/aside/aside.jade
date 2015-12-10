@@ -3,7 +3,7 @@ template(name="aside")
     aside.b-aside
         .b-aside-user
             a(href="/settings"): img.b-aside-user__image(src="http://image.shutterstock.com/display_pic_with_logo/1364107/306526304/stock-vector-cats-cartoon-vector-seamless-wallpaper-306526304.jpg")
-            .b-aside-user__name Железцов Виктор
+            .b-aside-user__name #{getMyUsername}
             .b-aside-user__logout.js-aside-user__logout Выйти
         .b-aside-btn
             a.b-aside-btn__add(href='#') Добавить

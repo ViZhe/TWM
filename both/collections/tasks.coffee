@@ -7,11 +7,13 @@ validateAttr = (attr) ->
         countErrors: 0
 
     if !attr.title
-        errors.title = 'Please fill in a headline'
+        errors.title = 'Это обязательное поле'
         errors.countErrors++
-    if !attr.url
-        errors.url = 'Please fill in a URL'
+        
+    if !attr.description
+        errors.description = 'Это обязательное поле'
         errors.countErrors++
+
     errors
 
 
@@ -36,12 +38,11 @@ Meteor.methods
             projectId: Match.Optional String
         )
 
-        # console.log Meteor.userId()
-        # errors = validateAttr attr
-        # if errors.countErrors
-        #     return {
-        #         errors: errors
-        #     }
+        errors = validateAttr attr
+        if errors.countErrors
+            return {
+                errors: errors
+            }
 
 
         task = _.extend(attr,

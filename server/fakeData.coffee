@@ -5,4 +5,5 @@ if Meteor.users.find().count() == 0
         email: 'test@test.ru'
         password: 'test'
         profile:
-            root: true
+            username: 'Железцов Виктор'
+        root: true

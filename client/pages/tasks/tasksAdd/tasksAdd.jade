@@ -7,10 +7,14 @@ template(name="tasksAdd")
                 .row
                     .col.w1
                     .col.w2
-                        label.c-form__label Название
-                            input.c-form__field(name="title")
-                        label.c-form__label Описание
-                            textarea.c-form__field.c-form__field_textarea(name="description", rows="10")
+                        label.c-form__label
+                            | Название
+                            span {{errorMessage 'title'}}
+                            input.c-form__field(name="title", class="{{errorClass 'title'}}")
+                        label.c-form__label
+                            | Описание
+                            span {{errorMessage 'description'}}
+                            textarea.c-form__field.c-form__field_textarea(name="description", rows="10", class="{{errorClass 'description'}}")
                 
                     .col.w2
                         label.c-form__label Исполнитель
