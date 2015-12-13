@@ -1,0 +1,34 @@
+
+/*!*
+ * Group:
+ * `.c-btn__group` — Группирует кнопки.
+ *
+ *
+ *		@example.padded
+ *		.c-btn__group
+ *			.c-btn.c-btn_color_red  Нажать
+ *			.c-btn.c-btn_color_green Нажать
+ *		.c-btn__group
+ *			.c-btn.c-btn_color_green.c-btn_size_xs Нажать
+ *			.c-btn.c-btn_color_blue.c-btn_size_xs Нажать
+ *		.c-btn__group
+ *			.c-btn.c-btn_color_red.c-btn_size_sm Нажать
+ *			.c-btn.c-btn_color_green.c-btn_size_sm Нажать
+ *			.c-btn.c-btn_color_blue.c-btn_size_sm Нажать
+ *
+ */
+
+.c-btn__group
+    relative false
+    display flex
+
+.c-btn__group .c-btn
+    if $siteBorderRadius != 0
+        border-radius 0
+
+    if $siteBorderRadius != 0
+        &:first-of-type
+            border-radius $siteBorderRadius 0 0 $siteBorderRadius
+
+        &:last-of-type
+            border-radius 0 $siteBorderRadius $siteBorderRadius 0

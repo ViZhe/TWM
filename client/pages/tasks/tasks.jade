@@ -1,19 +1,32 @@
 
 template(name="tasks")
     section.tasks
-        .row: .col.w1
-            .g-heading.g-heading_level_1.g-heading_first Задачи
+        .row
+            .col.w1
+                .g-heading.g-heading_level_1.g-heading_first Задачи
             
-            .c-island
-                .tasks-list
-                    .row
-                        .col.w0 Название
-                        .col.w5 Крайний срок
-                        .col.w5 Приоритет
-                        .col.w5 Ответственный
-                    each tasksList
-                        .row.taskItem
-                            .col.w0: a.taskItem__title(href="{{pathFor 'tasksItem' _id=_id}}") #{title}
-                            .col.w5: .taskItem__deadline #{deadline}
-                            .col.w5: .taskItem__priority #{priority}
-                            .col.w5: .taskItem__executor #{executorId}
+                .superlist
+                    .list: a(href="") Все
+                    .list: a(href="") Новые
+                    .list: a(href="") В работе
+                    .list: a(href="") Выполненные
+                    .list: a(href="") Завершенные
+                    .list: a(href="") Управление Группами 
+                
+                .c-island
+                    .tasks-list
+                        .row
+                            .col.w0 Название
+                            .col.w5 Крайний срок
+                            .col.w5 Приоритет
+                            .col.w5 Ответственный
+                        each tasksList
+                            .row.taskItem
+                                .col.w0: a.taskItem__title(href="{{pathFor 'tasksItem' _id=_id}}") #{title}
+                                .col.w5: .taskItem__deadline #{deadline}
+                                .col.w5: .taskItem__priority #{priority}
+                                .col.w5: .taskItem__executor {{getUserLInk executorId}}
+            .col.w4
+                .c-island
+                        
+                    
