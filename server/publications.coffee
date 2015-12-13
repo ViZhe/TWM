@@ -10,3 +10,9 @@ Meteor.publish 'nameUsers', ->
     Meteor.users.find {},
         fields:
             profile: 1
+
+Meteor.publish 'comments', (taskId) ->
+    Comments.find {taskId: taskId},
+        sort:
+            createdAt: -1
+            _id: -1

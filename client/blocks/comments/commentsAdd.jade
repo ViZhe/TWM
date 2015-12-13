@@ -1,0 +1,9 @@
+
+template(name="commentsAdd")
+    form.c-form
+        label.c-form__label
+            | Комментарий
+            span {{errorMessage 'body'}}
+            textarea.c-form__field.c-form__field_textarea(name="body", rows="5", class="{{errorClass 'body'}}")
+    
+        button Написать

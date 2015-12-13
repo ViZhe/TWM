@@ -1,0 +1,12 @@
+
+template(name="comments")
+    +commentsAdd
+    
+    .b-comments
+        each commentsList
+            .b-comments__item
+                .b-comments__author {{getUserLInk userId}}
+                .b-comments__date {{getTimeText createdAt}}
+                .b-comments__body
+                    +markdown
+                        #{body}

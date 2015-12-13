@@ -1,17 +1,19 @@
 
 template(name="tasks")
-    section.tasksItem
+    section.tasks
         .row: .col.w1
             .g-heading.g-heading_level_1.g-heading_first Задачи
-            .tasks-list
-                .row
-                    .col.w0 Задача
-                    .col.w5 Крайний срок
-                    .col.w5 Приоритет
-                    .col.w5 Ответственный
-                each tasksList
-                    .row.taskItem
-                        .col.w0: a.taskItem__title(href="{{pathFor 'tasksItem' _id=_id}}") #{title}
-                        .col.w5: .taskItem__deadline #{deadline}
-                        .col.w5: .taskItem__priority #{priority}
-                        .col.w5: .taskItem__executor #{executorId}
+            
+            .c-island
+                .tasks-list
+                    .row
+                        .col.w0 Название
+                        .col.w5 Крайний срок
+                        .col.w5 Приоритет
+                        .col.w5 Ответственный
+                    each tasksList
+                        .row.taskItem
+                            .col.w0: a.taskItem__title(href="{{pathFor 'tasksItem' _id=_id}}") #{title}
+                            .col.w5: .taskItem__deadline #{deadline}
+                            .col.w5: .taskItem__priority #{priority}
+                            .col.w5: .taskItem__executor #{executorId}

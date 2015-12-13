@@ -29,6 +29,7 @@ tasksRoutes.route '/:_id',
 
     subscriptions: (params, queryParams) ->
         @register 'tasksItem', Meteor.subscribe('tasksItem', params._id)
+        @register 'comments', Meteor.subscribe('comments', params._id)
         @register 'nameUsers', Meteor.subscribe('nameUsers')
 
     action: (params) ->

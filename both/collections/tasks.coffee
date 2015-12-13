@@ -1,15 +1,14 @@
 
-# нужна ли собака
 @Tasks = new Mongo.Collection 'tasks'
 
-validateAttr = (attr) ->
+validateTaskAttr = (attr) ->
     errors =
         countErrors: 0
 
     if !attr.title
         errors.title = 'Это обязательное поле'
         errors.countErrors++
-        
+
     if !attr.description
         errors.description = 'Это обязательное поле'
         errors.countErrors++
@@ -35,10 +34,10 @@ Meteor.methods
 
             # checklist
             deadline: Match.Optional String
-            projectId: Match.Optional String
+            projectId: Match.Optional String # Сделать обязательным
         )
 
-        errors = validateAttr attr
+        errors = validateTaskAttr attr
         if errors.countErrors
             return {
                 errors: errors

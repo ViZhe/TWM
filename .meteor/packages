@@ -14,7 +14,7 @@ templating
 spiderable # Генерация HTML на стороне клиента. Нуждается в `sudo apt-get install phantomjs`
 
 #### Препроцессоры ####
-vizhe:stylus
+vizhe:stylus-local
 coffeescript
 mquandalle:jade
 #standard-minifiers
@@ -35,4 +35,5 @@ jquery # Подключает jQuery
 check # Для проверки входящих данных
 random # Генирирует случайные строки
 sha # Шифрование
+chuangbo:marked
 ###########################

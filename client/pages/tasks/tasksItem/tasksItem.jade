@@ -1,13 +1,39 @@
 
 template(name="tasksItem")
-    section.tasksItem
-        .row: .col.w1
-            .g-heading.g-heading_level_1.g-heading_first #{title}
-            p description: #{description}
-            p priority: #{priority}
-            p executorId: #{executorId}
-            p coExecutor: #{coExecutor}
-            p deadline: #{deadline}
-            p projectId: #{projectId}
-            p createdAt: #{createdAt}
-            p userId: {{getUsername userId}} - #{userId}
+    section.p-tasks-item
+        .row
+            .col.w1
+                .g-heading.g-heading_level_1.g-heading_first #{title}
+                //- p description: #{description}
+            .col.w1
+                .c-island
+                    .p-tasks-item__info
+                        .p-tasks-item__info-col
+                            .p-tasks-item_label Исполнитель
+                            | {{getUserLInk executorId}}
+                            .p-tasks-item_label Участники
+                            | {{getUserLInk coExecutor}}
+
+                        .p-tasks-item__info-col
+                            .p-tasks-item_label Постановщик
+                            | {{getUserLInk userId}}
+                            .p-tasks-item_label Проект
+                            a(href="/projects/#{projectId}") #{projectId}
+
+                        .p-tasks-item__info-col
+                            .p-tasks-item_label Крайний срок
+                            div #{deadline}
+                            .p-tasks-item_label Дата создания
+                            | {{getTimeText createdAt}}
+
+                    .p-tasks-item__description.c-text
+                        +markdown
+                            #{description}
+                            
+                    .p-tasks-item__checklist
+                        | тут чеклист
+                
+                .g-heading.g-heading_level_2 Комментарии
+                .c-island
+                    +comments
+            .col.w4
