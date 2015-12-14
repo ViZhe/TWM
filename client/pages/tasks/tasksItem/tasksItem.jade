@@ -1,39 +1,35 @@
 
 template(name="tasksItem")
     section.p-tasks-item
-        .row
-            .col.w1
-                .g-heading.g-heading_level_1.g-heading_first #{title}
-                //- p description: #{description}
-            .col.w1
-                .c-island
-                    .p-tasks-item__info
-                        .p-tasks-item__info-col
-                            .p-tasks-item_label Исполнитель
-                            | {{getUserLInk executorId}}
-                            .p-tasks-item_label Участники
-                            | {{getUserLInk coExecutor}}
+        .c-island
+            .c-island__title Задача: #{title}
+            .p-tasks-item__description.c-text
+                +markdown
+                    #{description}
+                    
+            .p-tasks-item__checklist
+                | тут чеклист
+        
+        
+        .c-island
+            .c-island__title Комментарии
+            +comments
 
-                        .p-tasks-item__info-col
-                            .p-tasks-item_label Постановщик
-                            | {{getUserLInk userId}}
-                            .p-tasks-item_label Проект
-                            a(href="/projects/#{projectId}") #{projectId}
 
-                        .p-tasks-item__info-col
-                            .p-tasks-item_label Крайний срок
-                            div #{deadline}
-                            .p-tasks-item_label Дата создания
-                            | {{getTimeText createdAt}}
-
-                    .p-tasks-item__description.c-text
-                        +markdown
-                            #{description}
-                            
-                    .p-tasks-item__checklist
-                        | тут чеклист
-                
-                .g-heading.g-heading_level_2 Комментарии
-                .c-island
-                    +comments
-            .col.w4
+template(name="tasksItemSub")
+    .c-island
+        .c-island__title Информация о задаче
+        .p-tasks-item-sub
+            .p-tasks-item-sub__key Исполнитель
+            .p-tasks-item-sub__value {{getUserLInk executorId}}
+            if coExecutor
+                .p-tasks-item-sub__key Участники
+                .p-tasks-item-sub__value {{getUserLInk coExecutor}}                
+            .p-tasks-item-sub__key Постановщик
+            .p-tasks-item-sub__value {{getUserLInk userId}}
+            .p-tasks-item-sub__key Проект
+            .p-tasks-item-sub__value: a(href="/projects/#{projectId}") #{projectId}
+            .p-tasks-item-sub__key Крайний срок
+            .p-tasks-item-sub__value #{deadline}
+            .p-tasks-item-sub__key Дата создания
+            .p-tasks-item-sub__value {{getTimeText createdAt}}

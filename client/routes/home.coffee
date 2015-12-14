@@ -1,6 +1,9 @@
 
-FlowRouter.route '/',
+homeRoutes = FlowRouter.group
+    name: 'homeGroup'
+
+homeRoutes.route '/',
     name: 'home'
     action: ->
         BlazeLayout.render 'application',
-            content: 'home'
+            main: 'home'

@@ -1,5 +1,6 @@
 
 tasksRoutes = FlowRouter.group
+    name: 'tasksGroup'
     prefix: '/tasks'
 
 
@@ -12,8 +13,10 @@ tasksRoutes.route '/',
     action: () ->
         FlowRouter.subsReady 'tasksAll', ->
             BlazeLayout.render 'application',
-                content: 'tasks'
-                params: Tasks.find()
+                main: 'tasks'
+                mainParams: Tasks.find()
+                sub: 'tasksSub'
+
 
 
 tasksRoutes.route '/add',
@@ -21,7 +24,16 @@ tasksRoutes.route '/add',
 
     action: () ->
         BlazeLayout.render 'application',
-            content: 'tasksAdd'
+            main: 'tasksAdd'
+
+
+tasksRoutes.route '/projects',
+    name: 'tasksProjects'
+
+    action: () ->
+        BlazeLayout.render 'application',
+            main: 'tasksProjects'
+
 
 
 tasksRoutes.route '/:_id',
@@ -36,7 +48,9 @@ tasksRoutes.route '/:_id',
         FlowRouter.subsReady 'tasksItem', ->
             if task = Tasks.findOne()
                 BlazeLayout.render 'application',
-                    content: 'tasksItem'
-                    params: task
+                    main: 'tasksItem'
+                    mainParams: task
+                    sub: 'tasksItemSub'
+                    subParams: task
             else
                 BlazeLayout.render 'notFound'

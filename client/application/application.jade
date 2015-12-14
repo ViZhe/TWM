@@ -8,5 +8,8 @@ template(name="application")
             .application__header
                 +header
             .application__content
-                +Template.dynamic template=content data=params
+                .application__main
+                    +Template.dynamic template=main data=mainParams
+                .application__sub
+                    +Template.dynamic template=sub data=subParams
                 

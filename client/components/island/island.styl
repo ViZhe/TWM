@@ -1,12 +1,23 @@
 
 .c-island
+    margin-bottom 20px
     padding 15px
     background-color $white
-    box-shadow 0 0 0 1px $graylight
+    box-shadow 0 0 1px $graylight
     border-radius()
 
-    +media('in', 'sm')
-        padding 10px
+.c-island__title
+    display flex
+    justify-content space-between
+    align-items center
+    margin-bottom 15px
+    padding-bottom 5px
+    border-bottom 1px solid rgba($graylight, .5)
+    font-weight 700
+    font-size 20px
 
-    +media('max', 'xl')
-        padding 5px
+
+.c-island__settings
+    size 20px
+    background-image url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACAUlEQVRYhb3XT4hNYRzG8c9ws2FrhZSkKEkphVJIk7BADTZmeZsUi1E2lhN2sphoykKEQTEL+bMQUtYWVkzMkIghJfl3r8U5d2aajvf85jZnnvpt3vv+nuf7ds553/fSnrrwAX/RwEfsa9OrLQ2iOaUuz1Z4DW8KAF6gY6ZCVuE6dk8Z78DpgvBWHS/wWotzWBoN34ix3LCRg9RxFI8S4a0axB5sxyn8yMdHsbIsfDW+BkLarVEsTgFcqjC8Vf0pgHX4XmH4T2xKAcCZCgHOloXD3goBdkUAuoNmY3iSV/TFPRgBeFhi8h4HMHdSTy0f+1TSey0VvED58x/FkoTHctm58L/+Bo6YsmPWcR/fSsKb2JlaQa7ugM9zDGAH/A40NGX7f0Tz8Dno+UpwYhM3gwDwYDqLigLcmAbAvaDnCPwKTn4ZDK/JLisRz2GyjedCHlDWsCUAsD+4mKuyU3Ncc9AXaFyYCF8k+1RTn2FvnlWoDjwtgRhGZ0FvJ96W9F5MwI+rt8SkVa8xlFdq1ZNrawSgJ2jWTq2PANyuEOBYWXhXheFN2TmxLAVwq2KAJk6mAGbjUpo6TcFmEyfjF5zANtnjuRMIGcJh2ct8d9L4iOz/RkhrcB4rCn7rT4T3FMw/hCuyTWpGNF/xpePZTAVE9LgAoG82Aeom7n9/8A4b2jH6B7qWMv63azQGAAAAAElFTkSuQmCC')
+    background-size 100% 100%

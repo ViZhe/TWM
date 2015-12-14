@@ -1,8 +1,11 @@
 
 Template.aside.helpers
-    getMyUsername: (userId) ->
-        Meteor.user().profile.username
-
+    getMyUsername: () ->
+        username = Meteor.user()
+        if username
+            username.profile.username
+        else
+            ''
 
 Template.aside.events
     'click .js-aside-user__logout': (e, template) ->
