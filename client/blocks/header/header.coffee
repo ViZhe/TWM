@@ -11,6 +11,8 @@ Template.header.helpers
                     result = 'Задачи'
                 when 'usersGroup'
                     result = 'Пользователи'
+                when 'projectsGroup'
+                    result = 'Проекты'
                 else
                     result = 'TWM'
         else

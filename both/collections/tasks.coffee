@@ -48,7 +48,7 @@ Meteor.methods
             userId: Meteor.userId()
             createdAt: new Date
         )
-        taskId = Tasks.insert(attr)
+        taskId = Tasks.insert(task)
 
         return {
             _id: taskId

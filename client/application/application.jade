@@ -4,12 +4,13 @@ template(name="application")
         .application__aside
             +aside
             
-        .application__main
+        .application__page
             .application__header
                 +header
             .application__content
                 .application__main
                     +Template.dynamic template=main data=mainParams
+                    
                 .application__sub
                     +Template.dynamic template=sub data=subParams
                 

@@ -17,16 +17,16 @@ template(name="aside")
                 a.b-aside-nav__link(class="{{isActiveRoute 'home' class='b-aside-nav__link_active'}}", href="/")
                     .b-aside-nav__icon.b-aside-nav__icon_home
                     | Рабочий стол 
+            
+            .b-aside-nav__item
+                a.b-aside-nav__link(class="{{isActiveRoute 'projects' class='b-aside-nav__link_active'}}", href="/projects")
+                    .b-aside-nav__icon.b-aside-nav__icon_home
+                    | Проекты
                 
             .b-aside-nav__item
                 a.b-aside-nav__link(class="{{isActiveRoute 'tasks' class='b-aside-nav__link_active'}}", href="/tasks")
                     .b-aside-nav__icon.b-aside-nav__icon_home
                     | Задачи
-                    
-            .b-aside-nav__item
-                a.b-aside-nav__link(class="{{isActiveRoute 'projects' class='b-aside-nav__link_active'}}", href="/projects")
-                    .b-aside-nav__icon.b-aside-nav__icon_home
-                    | Проекты
                     
             //- .b-aside-nav__item
             //-     a.b-aside-nav__link(class="{{isActiveRoute 'clients' class='b-aside-nav__link_active'}}", href="/clients")

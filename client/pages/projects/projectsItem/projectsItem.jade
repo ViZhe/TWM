@@ -1,0 +1,24 @@
+
+template(name="projectsItem")
+    section.p-tasks-item
+        .c-island
+            .c-island__title Проект: #{title}
+            | лента событий
+            | типо созданн проект
+            | типо Добавлена задача
+            | типо Завершена задача
+            
+
+template(name="projectsItemSub")
+    .c-island
+        .c-island__title Информация о проекте
+        .p-tasks-item-sub
+            .p-tasks-item-sub__key Описание
+            .p-tasks-item-sub__value #{description}
+            .p-tasks-item-sub__key Создатель
+            .p-tasks-item-sub__value {{getUserLInk userId}}
+            if members
+                .p-tasks-item-sub__key Участники
+                .p-tasks-item-sub__value {{getUserLInk members}}
+            .p-tasks-item-sub__key Дата создания
+            .p-tasks-item-sub__value {{getTimeText createdAt}}

@@ -17,6 +17,8 @@ template(name="tasksAdd")
                             textarea.c-form__field.c-form__field_textarea(name="description", rows="10", class="{{errorClass 'description'}}")
                 
                     .col.w2
+                        label.c-form__label Проект
+                            input.c-form__field(name="projectId")
                         label.c-form__label Исполнитель
                             input.c-form__field(name="executorId")
                         label.c-form__label Соисполнители
@@ -31,9 +33,6 @@ template(name="tasksAdd")
                             .col.w2
                                 label.c-form__label Крайний срок
                                     input.c-form__field(name="deadline")
-                        label.c-form__label Проект
-                            input.c-form__field(name="projectId")
                         
-                    .col.w1
-                    
-                        button Создать задачу
+                    .col.w1                    
+                        button.c-btn.c-btn_color_green Создать задачу

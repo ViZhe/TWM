@@ -14,7 +14,6 @@ tasksRoutes.route '/',
         FlowRouter.subsReady 'tasksAll', ->
             BlazeLayout.render 'application',
                 main: 'tasks'
-                mainParams: Tasks.find()
                 sub: 'tasksSub'
 
 
@@ -25,14 +24,6 @@ tasksRoutes.route '/add',
     action: () ->
         BlazeLayout.render 'application',
             main: 'tasksAdd'
-
-
-tasksRoutes.route '/projects',
-    name: 'tasksProjects'
-
-    action: () ->
-        BlazeLayout.render 'application',
-            main: 'tasksProjects'
 
 
 

@@ -1,0 +1,20 @@
+
+template(name="projects")
+    section.p-projects
+        .c-island
+            .c-island__title Список проектов
+            .projects-list
+                .row
+                    .col.w0 Название
+                    .col.w5 Описание
+                    .col.w5 Задач
+                each projectsList
+                    .row.projects-list__row
+                        .col.w0: a.projects-list__title(href="{{pathFor 'projectsItem' _id=_id}}") #{title}
+                        .col.w5: .projects-list__description #{description}
+                        .col.w5: .projects-list__members 0
+
+
+template(name="projectsSub")
+    //- .c-island
+    //-     .c-island__title Информация о проекте
