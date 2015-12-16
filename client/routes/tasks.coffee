@@ -21,9 +21,13 @@ tasksRoutes.route '/',
 tasksRoutes.route '/add',
     name: 'tasksAdd'
 
+    subscriptions: () ->
+        @register 'tasksAdd', Meteor.subscribe('tasksAdd') # передавать id юзера, чтоб подгружать только видимые проекты
+
     action: () ->
-        BlazeLayout.render 'application',
-            main: 'tasksAdd'
+        FlowRouter.subsReady 'tasksAdd', ->
+            BlazeLayout.render 'application',
+                main: 'tasksAdd'
 
 
 
@@ -32,8 +36,6 @@ tasksRoutes.route '/:_id',
 
     subscriptions: (params, queryParams) ->
         @register 'tasksItem', Meteor.subscribe('tasksItem', params._id)
-        @register 'comments', Meteor.subscribe('comments', params._id)
-        @register 'nameUsers', Meteor.subscribe('nameUsers')
 
     action: (params) ->
         FlowRouter.subsReady 'tasksItem', ->

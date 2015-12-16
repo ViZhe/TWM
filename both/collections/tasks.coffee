@@ -13,6 +13,10 @@ validateTaskAttr = (attr) ->
         errors.description = 'Это обязательное поле'
         errors.countErrors++
 
+    if !Projects.findOne(attr.projectId)
+        errors.projectId = 'Проект не найден.'
+        errors.countErrors++
+
     errors
 
 
@@ -34,7 +38,7 @@ Meteor.methods
 
             # checklist
             deadline: Match.Optional String
-            projectId: Match.Optional String # Сделать обязательным
+            projectId: String
         )
 
         errors = validateTaskAttr attr
@@ -43,12 +47,13 @@ Meteor.methods
                 errors: errors
             }
 
-
         task = _.extend(attr,
             userId: Meteor.userId()
             createdAt: new Date
         )
         taskId = Tasks.insert(task)
+
+        Projects.update {_id: task.projectId}, $inc: 'counters.tasks': 1
 
         return {
             _id: taskId

@@ -2,25 +2,34 @@
 Meteor.publish 'tasksAll', () ->
     Tasks.find()
 
-Meteor.publish 'tasksItem', (taskId) ->
-    Tasks.find(taskId)
+Meteor.publish 'tasksAdd', (userId) ->
+    Projects.find() # получить только те проекты в которых состоит пользователь
 
+Meteor.publish 'tasksItem', (taskId) ->
+    [
+        Tasks.find(taskId)
+        Projects.find()
+
+        # Ограничить только юзернеймом
+        Meteor.users.find {},
+            fields:
+                profile: 1
+
+        Comments.find {taskId: taskId},
+            sort:
+                createdAt: -1
+                _id: -1
+    ]
 
 Meteor.publish 'projectsAll', () ->
     Projects.find()
 
 Meteor.publish 'projectsItem', (projectId) ->
-    Projects.find(projectId)
+    [
+        Projects.find(projectId)
 
-
-# Ограничить только юзернеймом
-Meteor.publish 'nameUsers', ->
-    Meteor.users.find {},
-        fields:
-            profile: 1
-
-Meteor.publish 'comments', (taskId) ->
-    Comments.find {taskId: taskId},
-        sort:
-            createdAt: -1
-            _id: -1
+        # Ограничить только юзернеймом
+        Meteor.users.find {},
+            fields:
+                profile: 1
+    ]

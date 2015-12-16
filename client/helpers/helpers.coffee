@@ -19,6 +19,16 @@ Template.registerHelper 'getUserLInk', (userId) ->
     new Handlebars.SafeString result
 
 
+Template.registerHelper 'getProjectLink', (projectId) ->
+    project = Projects.findOne(projectId)
+    if project
+        result = '<a href="/projects/' + projectId + '">' + project.title + '</a>'
+    else
+        result = 'Не найден'
+
+    new Handlebars.SafeString result
+
+
 
 addZero = (num) ->
     i = if num < 10 then '0' + num else num

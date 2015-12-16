@@ -18,11 +18,12 @@ template(name="tasksAdd")
                 
                     .col.w2
                         label.c-form__label Проект
-                            input.c-form__field(name="projectId")
+                            span {{errorMessage 'projectId'}}
+                            input.c-form__field(name="projectId", class="{{errorClass 'projectId'}}", autocomplete="off")
                         label.c-form__label Исполнитель
-                            input.c-form__field(name="executorId")
+                            input.c-form__field(name="executorId", autocomplete="off")
                         label.c-form__label Соисполнители
-                            input.c-form__field(name="coExecutor")
+                            input.c-form__field(name="coExecutor", autocomplete="off")
                         .row
                             .col.w2
                                 label.c-form__label Приоритет

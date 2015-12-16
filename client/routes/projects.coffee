@@ -32,7 +32,6 @@ projectsRoutes.route '/:_id',
 
     subscriptions: (params, queryParams) ->
         @register 'projectsItem', Meteor.subscribe('projectsItem', params._id)
-        @register 'nameUsers', Meteor.subscribe('nameUsers')
 
     action: (params) ->
         FlowRouter.subsReady 'projectsItem', ->

@@ -12,7 +12,7 @@ template(name="projects")
                     .row.projects-list__row
                         .col.w0: a.projects-list__title(href="{{pathFor 'projectsItem' _id=_id}}") #{title}
                         .col.w5: .projects-list__description #{description}
-                        .col.w5: .projects-list__members 0
+                        .col.w5: .projects-list__members {{getCounter counters.tasks}}
 
 
 template(name="projectsSub")
