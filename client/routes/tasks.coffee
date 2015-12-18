@@ -22,7 +22,7 @@ tasksRoutes.route '/add',
     name: 'tasksAdd'
 
     subscriptions: () ->
-        @register 'tasksAdd', Meteor.subscribe('tasksAdd') # передавать id юзера, чтоб подгружать только видимые проекты
+        @register 'tasksAdd', Meteor.subscribe('tasksAdd', Meteor.userId())
 
     action: () ->
         FlowRouter.subsReady 'tasksAdd', ->

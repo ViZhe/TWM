@@ -15,15 +15,46 @@ template(name="tasksAdd")
                             | Описание
                             span {{errorMessage 'description'}}
                             textarea.c-form__field.c-form__field_textarea(name="description", rows="10", class="{{errorClass 'description'}}")
-                
+
                     .col.w2
-                        label.c-form__label Проект
+                        .c-form__label Проект
                             span {{errorMessage 'projectId'}}
-                            input.c-form__field(name="projectId", class="{{errorClass 'projectId'}}", autocomplete="off")
-                        label.c-form__label Исполнитель
-                            input.c-form__field(name="executorId", autocomplete="off")
+                            input.g-hide(name="projectIdField", class="{{errorClass 'projectId'}}")
+                            .c-typeahead
+                                input.c-form__field.js-typeahead__result(value="Проект не выбран.", disabled)
+                                a.c-btn.c-btn_no-link.c-btn_color_redsoft.c-typeahead__btn(href="#") Выбрать проект
+                                .c-typeahead__list(data-name="projectId")
+                                    if projectsList
+                                        each projectsList
+                                            label.c-typeahead__item
+                                                input.js-typeahead__input(type="radio", name="projectId" value="#{_id}" )
+                                                span.js-typeahead__item #{title}
+                                    else
+                                        .c-typeahead__no-result: a(href="projects/add") Создать проект
+                                        
+                        .c-form__label Исполнитель
+                            span {{errorMessage 'executorId'}}
+                            input.g-hide(name="executorIdField")
+                            .c-typeahead
+                                input.c-form__field.js-typeahead__result(value="Исполнитель не выбран.", disabled)
+                                a.c-btn.c-btn_no-link.c-btn_color_redsoft.c-typeahead__btn(href="#") Выбрать исполнителя
+                                .c-typeahead__list
+                                    each usersList
+                                        label.c-typeahead__item
+                                            input.js-typeahead__input(type="radio", name="executorId" value="#{_id}" )
+                                            span.js-typeahead__item #{profile.username}
+                                        
                         label.c-form__label Соисполнители
-                            input.c-form__field(name="coExecutor", autocomplete="off")
+                            span {{errorMessage 'coExecutor'}}
+                            input.g-hide(name="coExecutorField")
+                            .c-typeahead
+                                input.c-form__field.js-typeahead__result(value="Соисполнители не выбраны.", disabled)
+                                a.c-btn.c-btn_no-link.c-btn_color_redsoft.c-typeahead__btn(href="#") Выбрать соисполнителей
+                                .c-typeahead__list
+                                    each usersList
+                                        label.c-typeahead__item
+                                            input.js-typeahead__input(type="checkbox", name="coExecutor" value="#{_id}" )
+                                            span #{profile.username}
                         .row
                             .col.w2
                                 label.c-form__label Приоритет
@@ -36,4 +67,4 @@ template(name="tasksAdd")
                                     input.c-form__field(name="deadline")
                         
                     .col.w1                    
-                        button.c-btn.c-btn_color_green Создать задачу
+                        button.c-btn.c-btn_color_green.js-tasks-add__btn Создать задачу

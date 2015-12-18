@@ -3,6 +3,9 @@ Template.tasksAdd.onCreated ->
     Session.set 'tasksAddErrors', {}
     return
 
+# Template.tasksAdd.rendered = ->
+#     Meteor.typeahead()
+#     return
 
 Template.tasksAdd.helpers
     errorMessage: (field) ->
@@ -11,19 +14,49 @@ Template.tasksAdd.helpers
     errorClass: (field) ->
         if !!Session.get('tasksAddErrors')[field] then 'c-form__field_invalid'
 
+    projectsList: () ->
+        Projects.find()
+
+    usersList: () ->
+        Meteor.users.find()
 
 Template.tasksAdd.events
+    'click .c-typeahead__btn': (e, template) ->
+        e.preventDefault()
+        parent = $(e.target).parent()
+        if !parent.hasClass 'c-typeahead_open'
+            $('.c-typeahead_open').removeClass 'c-typeahead_open'
+
+        parent.toggleClass 'c-typeahead_open'
+
+
+    'click .js-typeahead__item': (e, template) ->
+        $('.c-typeahead_open').removeClass 'c-typeahead_open'
+
+    'click .js-typeahead__input': (e, template) ->
+        # e.preventDefault()
+        name = $(e.target).next().text()
+        $(e.target).parentsUntil('.c-form__label')
+            .find('.js-typeahead__result').val name # Тут нужно смотреть все чекнутые и через запятую выводить
+        $(e.target).attr('checked', true)
+
     'submit form': (e, template) ->
         e.preventDefault()
 
+    'click .js-tasks-add__btn': (e, template) ->
+
+        executorIdCall = template.find('[name=executorId]:checked')
+        projectIdCall = template.find('[name=projectId]:checked')
         task =
             title: template.find('[name=title]').value
             description: template.find('[name=description]').value
             priority: template.find('[name=priority]').value
-            executorId: template.find('[name=executorId]').value
-            coExecutor: template.find('[name=coExecutor]').value
+            executorId: executorIdCall && executorIdCall.value || ''
+            coExecutor: template.findAll('[name=coExecutor]:checked').map (item) -> $(item).val()
             deadline: template.find('[name=deadline]').value
-            projectId: template.find('[name=projectId]').value
+            projectId: projectIdCall && projectIdCall.value || ''
+
+        # console.log template.find('[name=projectId]:checked').value
 
         Meteor.call 'taskInsert', task, (error, result) ->
             if error

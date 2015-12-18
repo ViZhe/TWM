@@ -13,8 +13,16 @@ validateTaskAttr = (attr) ->
         errors.description = 'Это обязательное поле'
         errors.countErrors++
 
-    if !Projects.findOne(attr.projectId)
+    if !attr.projectId
+        errors.projectId = 'Это обязательное поле'
+        errors.countErrors++
+
+    if !!attr.projectId && !Projects.findOne(attr.projectId)
         errors.projectId = 'Проект не найден.'
+        errors.countErrors++
+
+    if !attr.executorId
+        errors.executorId = 'Это обязательное поле'
         errors.countErrors++
 
     errors
@@ -30,8 +38,8 @@ Meteor.methods
 
             executorId: String
             coExecutor: Match.Optional Match.Where (x) ->
-                check(x, String)
-                x.split(', ').forEach (id) ->
+                check(x, Array)
+                x.forEach (id) ->
                     check(id, String)
                     return
                 return true
