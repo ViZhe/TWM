@@ -21,10 +21,13 @@ projectsRoutes.route '/',
 projectsRoutes.route '/add',
     name: 'projectsAdd'
 
-    action: () ->
-        BlazeLayout.render 'application',
-            main: 'projectsAdd'
+    subscriptions: () ->
+        @register 'projectsAdd', Meteor.subscribe('projectsAdd')
 
+    action: () ->
+        FlowRouter.subsReady 'projectsAdd', ->
+            BlazeLayout.render 'application',
+                main: 'projectsAdd'
 
 
 projectsRoutes.route '/:_id',

@@ -8,10 +8,10 @@ tasksRoutes.route '/',
     name: 'tasks'
 
     subscriptions: (params, queryParams) ->
-        @register 'tasksAll', Meteor.subscribe('tasksAll')
+        @register 'tasks', Meteor.subscribe('tasks')
 
     action: () ->
-        FlowRouter.subsReady 'tasksAll', ->
+        FlowRouter.subsReady 'tasks', ->
             BlazeLayout.render 'application',
                 main: 'tasks'
                 sub: 'tasksSub'
@@ -22,7 +22,7 @@ tasksRoutes.route '/add',
     name: 'tasksAdd'
 
     subscriptions: () ->
-        @register 'tasksAdd', Meteor.subscribe('tasksAdd', Meteor.userId())
+        @register 'tasksAdd', Meteor.subscribe('tasksAdd')
 
     action: () ->
         FlowRouter.subsReady 'tasksAdd', ->

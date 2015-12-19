@@ -3,9 +3,12 @@ Template.tasksAdd.onCreated ->
     Session.set 'tasksAddErrors', {}
     return
 
-# Template.tasksAdd.rendered = ->
-#     Meteor.typeahead()
-#     return
+Template.tasksAdd.rendered = ->
+    $('.js-datepicker').datepicker(
+        minDate: new Date()
+        autoClose: true
+    )
+    return
 
 Template.tasksAdd.helpers
     errorMessage: (field) ->
@@ -29,15 +32,19 @@ Template.tasksAdd.events
 
         parent.toggleClass 'c-typeahead_open'
 
-
     'click .js-typeahead__item': (e, template) ->
         $('.c-typeahead_open').removeClass 'c-typeahead_open'
 
     'click .js-typeahead__input': (e, template) ->
         # e.preventDefault()
-        name = $(e.target).next().text()
+        name = ''
+        $(e.target).parentsUntil('.c-typeahead').find(':checked').map (i, it) ->
+            if !!name
+                name += ', '
+            name += $(it).next().text()
+
         $(e.target).parentsUntil('.c-form__label')
-            .find('.js-typeahead__result').val name # Тут нужно смотреть все чекнутые и через запятую выводить
+            .find('.js-typeahead__result').val name
         $(e.target).attr('checked', true)
 
     'submit form': (e, template) ->
@@ -56,7 +63,6 @@ Template.tasksAdd.events
             deadline: template.find('[name=deadline]').value
             projectId: projectIdCall && projectIdCall.value || ''
 
-        # console.log template.find('[name=projectId]:checked').value
 
         Meteor.call 'taskInsert', task, (error, result) ->
             if error

@@ -9,7 +9,7 @@ template(name="comments")
                 .b-comments__content
                     .b-comments__header
                         .b-comments__author {{getUserLInk userId}}
-                        .b-comments__date {{getTimeText createdAt}}
+                        .b-comments__date {{getDateFullText createdAt}}
                         .b-comments__anchor: a(href="{{anchorLInk _id}}") #
                     .b-comments__body
                         +markdown

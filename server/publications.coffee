@@ -1,10 +1,24 @@
 
-Meteor.publish 'tasksAll', () ->
-    Tasks.find()
-
-Meteor.publish 'tasksAdd', (userId) ->
+Meteor.publish 'tasks', () ->
     [
-        Projects.find() # вывести те проекты в которых состоит пользователь userId
+        Tasks.find $or: [
+            {coExecutor: $all: [@userId]}
+            {coExecutor: @userId}
+            {userId: @userId}
+        ]
+
+        Meteor.users.find {},
+            fields:
+                'profile.username': 1
+    ]
+
+Meteor.publish 'tasksAdd', () ->
+    [
+        Projects.find $or: [
+            {members: $all: [@userId]}
+            {userId: @userId}
+        ]
+
         Meteor.users.find {},
             fields:
                 'profile.username': 1
@@ -15,7 +29,6 @@ Meteor.publish 'tasksItem', (taskId) ->
         Tasks.find(taskId)
         Projects.find()
 
-        # Ограничить только юзернеймом
         Meteor.users.find {},
             fields:
                 'profile.username': 1
@@ -29,12 +42,16 @@ Meteor.publish 'tasksItem', (taskId) ->
 Meteor.publish 'projectsAll', () ->
     Projects.find()
 
+Meteor.publish 'projectsAdd', (userId) ->
+    Meteor.users.find {},
+        fields:
+            'profile.username': 1
+
 Meteor.publish 'projectsItem', (projectId) ->
     [
         Projects.find(projectId)
 
-        # Ограничить только юзернеймом
         Meteor.users.find {},
             fields:
-                profile: 1
+                'profile.username': 1
     ]

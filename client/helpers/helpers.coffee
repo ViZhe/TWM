@@ -33,7 +33,7 @@ Template.registerHelper 'getProjectLink', (projectId) ->
 addZero = (num) ->
     i = if num < 10 then '0' + num else num
 
-Template.registerHelper 'getTimeText', (time) ->
+getDate = (time, type) ->
     fullDate = new Date(time)
 
     Year = fullDate.getFullYear()
@@ -44,8 +44,16 @@ Template.registerHelper 'getTimeText', (time) ->
 
     date = addZero(Day) + '.' + addZero(Month) + '.' + Year
     time = addZero(Hours) + ':' + addZero(Minutes)
+    if type == 'full'
+        date + ' ' + time
+    else
+        date
 
-    date + ' ' + time
+Template.registerHelper 'getDateText', (time) ->
+    getDate(time)
+
+Template.registerHelper 'getDateFullText', (time) ->
+    getDate(time, 'full')
 
     # Человеко-понятные даты: 2 дня назад, через 21 день, через 2 часа.
     # now = new Date().getTime()

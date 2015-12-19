@@ -9,10 +9,28 @@ template(name="tasksItem")
                     
             .p-tasks-item__checklist
                 | тут чеклист
-        
-        
+                
+                if isCreator
+                    //- if не завершена и не отменена
+                    .p-tasks-item__control
+                        | Это создатель
+                        //- if не выполнена
+                        .c-btn.c-btn_color_blue Изменить
+                        .c-btn.c-btn_color_blue(title="Поменять статус задачи на: Отменена") Отменить
+                        //- if выполнена
+                        .c-btn.c-btn_color_blue(title="Поменять статус задачи на: Завершена") Принять
+                        .c-btn.c-btn_color_blue(title="Отправить на доработку") Отклонить
+                if isExecutor
+                    //- if новали или в работе
+                    .p-tasks-item__control
+                        | Это исполнитель
+                        //- if новая
+                        .c-btn.c-btn_color_blue(title="Отправить на доработку") Принять
+                        //- if в работе
+                        .c-btn.c-btn_color_blue Выполнить
         .c-island
             .c-island__title Комментарии
+            //- if завершена или отменена - запретить новые комменты  
             +comments
 
 
@@ -32,5 +50,7 @@ template(name="tasksItemSub")
             if deadline
                 .p-tasks-item-sub__key Крайний срок
                 .p-tasks-item-sub__value #{deadline}
+            .p-tasks-item-sub__key Приоритет
+            .p-tasks-item-sub__value {{getPriorityText  priority}}
             .p-tasks-item-sub__key Дата создания
-            .p-tasks-item-sub__value {{getTimeText createdAt}}
+            .p-tasks-item-sub__value {{getDateText createdAt}}

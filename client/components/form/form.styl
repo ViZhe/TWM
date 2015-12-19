@@ -9,7 +9,6 @@
 
 .c-form
     display block
-    margin-top -15px
 
 
 /**
@@ -30,13 +29,13 @@
 
 .c-form__label
     display block
-    margin-top 15px
+    margin-bottom 15px
 
 .c-form__label_space_middle:not(:first-of-type)
-    margin-top 10px
+    margin-bottom 10px
 
 .c-form__label_space_small:not(:first-of-type)
-    margin-top 5px
+    margin-bottom 5px
 
 .c-form__label_disabled
     color $gray
@@ -45,7 +44,9 @@
     &::before
         color @color !important
 
-
+.c-form__error
+    color $red
+    
 .c-form__radio
 .c-form__checkbox
     padding-left 23px

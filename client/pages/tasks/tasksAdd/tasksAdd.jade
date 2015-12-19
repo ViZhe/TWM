@@ -2,23 +2,23 @@
 template(name="tasksAdd")
     section.tasksAdd.c-island
         .row: .col.w1
-            .g-heading.g-heading_level_1.g-heading_first Создание задачи
+            .c-island__title Создание задачи
             form.c-form
                 .row
                     .col.w1
                     .col.w2
                         label.c-form__label
                             | Название
-                            span {{errorMessage 'title'}}
+                            span.c-form__error {{errorMessage 'title'}}
                             input.c-form__field(name="title", class="{{errorClass 'title'}}")
                         label.c-form__label
                             | Описание
-                            span {{errorMessage 'description'}}
+                            span.c-form__error {{errorMessage 'description'}}
                             textarea.c-form__field.c-form__field_textarea(name="description", rows="10", class="{{errorClass 'description'}}")
 
                     .col.w2
                         .c-form__label Проект
-                            span {{errorMessage 'projectId'}}
+                            span.c-form__error {{errorMessage 'projectId'}}
                             input.g-hide(name="projectIdField", class="{{errorClass 'projectId'}}")
                             .c-typeahead
                                 input.c-form__field.js-typeahead__result(value="Проект не выбран.", disabled)
@@ -33,7 +33,7 @@ template(name="tasksAdd")
                                         .c-typeahead__no-result: a(href="projects/add") Создать проект
                                         
                         .c-form__label Исполнитель
-                            span {{errorMessage 'executorId'}}
+                            span.c-form__error {{errorMessage 'executorId'}}
                             input.g-hide(name="executorIdField")
                             .c-typeahead
                                 input.c-form__field.js-typeahead__result(value="Исполнитель не выбран.", disabled)
@@ -45,7 +45,7 @@ template(name="tasksAdd")
                                             span.js-typeahead__item #{profile.username}
                                         
                         label.c-form__label Соисполнители
-                            span {{errorMessage 'coExecutor'}}
+                            span.c-form__error {{errorMessage 'coExecutor'}}
                             input.g-hide(name="coExecutorField")
                             .c-typeahead
                                 input.c-form__field.js-typeahead__result(value="Соисполнители не выбраны.", disabled)
@@ -64,7 +64,7 @@ template(name="tasksAdd")
                                         option(value="low") Низкий
                             .col.w2
                                 label.c-form__label Крайний срок
-                                    input.c-form__field(name="deadline")
+                                    input.c-form__field.js-datepicker(name="deadline", placeholder="19.12.2015", data-position="top right", autocomplete="off", spellcheck="off")
                         
                     .col.w1                    
                         button.c-btn.c-btn_color_green.js-tasks-add__btn Создать задачу

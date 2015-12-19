@@ -22,6 +22,12 @@ Meteor.methods
         check(attr,
             title: String
             description: String
+            members: Match.Optional Match.Where (x) ->
+                check(x, Array)
+                x.forEach (id) ->
+                    check(id, String)
+                    return
+                return true
         )
 
         errors = validateProjectAttr attr
