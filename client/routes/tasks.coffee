@@ -39,11 +39,9 @@ tasksRoutes.route '/:_id',
 
     action: (params) ->
         FlowRouter.subsReady 'tasksItem', ->
-            if task = Tasks.findOne()
+            if Tasks.findOne()
                 BlazeLayout.render 'application',
                     main: 'tasksItem'
-                    mainParams: task
                     sub: 'tasksItemSub'
-                    subParams: task
             else
                 BlazeLayout.render 'notFound'

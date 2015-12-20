@@ -38,11 +38,9 @@ projectsRoutes.route '/:_id',
 
     action: (params) ->
         FlowRouter.subsReady 'projectsItem', ->
-            if project = Projects.findOne()
+            if Projects.findOne()
                 BlazeLayout.render 'application',
                     main: 'projectsItem'
-                    mainParams: project
                     sub: 'projectsItemSub'
-                    subParams: project
             else
                 BlazeLayout.render 'notFound'

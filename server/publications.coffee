@@ -1,11 +1,13 @@
 
 Meteor.publish 'tasks', () ->
     [
-        Tasks.find $or: [
+        Tasks.find {$or: [
             {coExecutor: $all: [@userId]}
-            {coExecutor: @userId}
+            {executorId: @userId}
             {userId: @userId}
-        ]
+        ]}, sort:
+            createdAt: -1
+            _id: -1
 
         Meteor.users.find {},
             fields:
@@ -25,9 +27,11 @@ Meteor.publish 'tasksAdd', () ->
     ]
 
 Meteor.publish 'tasksItem', (taskId) ->
+    task = Tasks.findOne({_id: taskId})
+
     [
         Tasks.find(taskId)
-        Projects.find()
+        Projects.find(task.projectId)
 
         Meteor.users.find {},
             fields:
@@ -40,7 +44,12 @@ Meteor.publish 'tasksItem', (taskId) ->
     ]
 
 Meteor.publish 'projectsAll', () ->
-    Projects.find()
+    Projects.find {$or: [
+        {members: $all: [@userId]}
+        {userId: @userId}
+    ]}, sort:
+        title: 1
+        _id: 1
 
 Meteor.publish 'projectsAdd', (userId) ->
     Meteor.users.find {},

@@ -27,6 +27,27 @@ validateTaskAttr = (attr) ->
 
     errors
 
+validateTaskUpateStatus = (options) ->
+    errors =
+        countErrors: 0
+
+    task = Tasks.findOne(options.taskId)
+    if !task
+        errors.error = 'Задача не найдена.'
+        errors.countErrors++
+
+    status = options.status
+    if status == 'complete' || status == 'cancel'
+        if task.userId != Meteor.userId()
+            errors.error = 'Это действие доступно только постановщику задачи.'
+            errors.countErrors++
+
+    if status == 'work' || status == 'done'
+        if task.executorId != Meteor.userId()
+            errors.error = 'Это действие доступно только исполнителю задачи.'
+            errors.countErrors++
+
+    errors
 
 Meteor.methods
     taskInsert: (attr) ->
@@ -58,6 +79,7 @@ Meteor.methods
         task = _.extend(attr,
             userId: Meteor.userId()
             createdAt: new Date
+            status: 'new'
         )
         taskId = Tasks.insert(task)
 
@@ -69,3 +91,21 @@ Meteor.methods
 
     taskUpdate: (attr) ->
         console.log attr
+
+    taskUpateStatus: (options) ->
+        check(options,
+            taskId: String
+            status: String
+        )
+
+        errors = validateTaskUpateStatus options
+        if errors.countErrors
+            return {
+                errors: errors
+            }
+
+        Tasks.update {_id: options.taskId}, $set: 'status': options.status
+
+        return {
+            _id: options.taskId
+        }
