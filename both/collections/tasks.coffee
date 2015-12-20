@@ -35,7 +35,9 @@ validateTaskUpateStatus = (options) ->
     if !task
         errors.error = 'Задача не найдена.'
         errors.countErrors++
+        return errors
 
+    statusActive = task.status
     status = options.status
     if status == 'complete' || status == 'cancel'
         if task.userId != Meteor.userId()
@@ -46,6 +48,14 @@ validateTaskUpateStatus = (options) ->
         if task.executorId != Meteor.userId()
             errors.error = 'Это действие доступно только исполнителю задачи.'
             errors.countErrors++
+
+    # Упростить
+    if (statusActive == 'new' && status != 'work' && status != 'cancel') ||
+       (statusActive == 'work' && status != 'done' && status != 'cancel') ||
+       (statusActive == 'done' && status != 'work' && status != 'complete') ||
+       (statusActive in ['complete', 'cancel'])
+        errors.error = 'Недоступный статус задачи.'
+        errors.countErrors++
 
     errors
 

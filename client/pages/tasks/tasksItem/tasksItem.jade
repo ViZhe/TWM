@@ -40,21 +40,21 @@ template(name="tasksItemSub")
                 .p-tasks-item-sub__key Дата создания
                 .p-tasks-item-sub__value {{getDateText createdAt}}
 
-        if isCreatorOrExecutor
+        if isStatusControl
             .c-island
                 .c-island__title Управление задачей
                 .p-tasks-item-sub
                     if isCreator
-                        | Это создатель
+                        //- | Это создатель
                         if isStatus 'new' 'work'
-                            .c-btn.c-btn_color_blue.c-btn_block Изменить
-                            .c-btn.c-btn_color_blue.c-btn_block.js-task-control_cancel(title="Поменять статус задачи на: Отменена") Отменить
+                            .p-tasks-item-sub__value: a.c-btn.c-btn_color_blue.c-btn_block(href="edit") Редактировать
+                            .p-tasks-item-sub__value: .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="cancel", title="Поменять статус задачи на: Отменена") Отменить задачу
                         if isStatus 'done'
-                            .c-btn.c-btn_color_blue(title="Поменять статус задачи на: Завершена") Принять
-                            .c-btn.c-btn_color_blue(title="Отправить на доработку") Отклонить
+                            .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="complete", title="Поменять статус задачи на: Завершена") Принять результат
+                            .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="work", title="Отправить на доработку") Отправить на доработку
                     if isExecutor
-                        | Это исполнитель
+                        //- | Это исполнитель
                         if isStatus 'new'
-                            .c-btn.c-btn_color_blue(title="Поменять статус задачи на: В работе") Принять
+                            .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="work", title="Поменять статус задачи на: В работе") Принять к выполнению
                         if isStatus 'work'
-                            .c-btn.c-btn_color_blue(title="Поменять статус задачи на: Выполнена") Выполнить
+                            .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="done",title="Поменять статус задачи на: Выполнена") Выполнить задачу

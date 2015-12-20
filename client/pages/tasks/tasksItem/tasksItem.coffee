@@ -1,32 +1,9 @@
 
-
 Template.tasksItem.helpers
     task: () ->
         Tasks.findOne()
 
-# Template.tasksItem.helpers
 
-        # if statuses.length == 1
-        #     statuses = []
-        #     statuses.push operator
-        #     operator = 'and'
-        #
-        # status = @status
-        #
-        # switch operator
-        #     when 'and'
-        #         result = true
-        #         statuses.forEach (item) ->
-        #             if typeof item == 'string' && item == status
-        #                 result = false
-        #
-        #     when 'or'
-        #         result = false
-        #         statuses.forEach (item) ->
-        #             if typeof item == 'string' && item == status
-        #                 result = true
-        #
-        # result
 # Поменять хелперы на объекты langStatus.high = Высокий
 Template.tasksItemSub.helpers
     task: () ->
@@ -54,16 +31,16 @@ Template.tasksItemSub.helpers
             when 'cancel'
                 'Отменена'
 
-
     isCreator: () ->
         Meteor.userId() == @userId
 
     isExecutor: () ->
         Meteor.userId() == @executorId
 
-    isCreatorOrExecutor: () ->
-        Meteor.userId() == @userId || Meteor.userId() == @executorId
-
+    isStatusControl: () ->
+        allow = Meteor.userId() == @userId || Meteor.userId() == @executorId
+        statuses = @status in ['complete', 'cancel']
+        allow && !statuses
 
     isStatus: (statuses...) ->
         result = false
@@ -75,27 +52,16 @@ Template.tasksItemSub.helpers
         result
 
 Template.tasksItemSub.events
-    'click .js-task-control_cancel': (e, template) ->
+    'click .js-task-item__status-control': (e, template) ->
 
         options =
-            status: 'cancel'
+            status: e.target.dataset.status
             taskId: @_id
 
         Meteor.call 'taskUpateStatus', options, (error, result) ->
             if error
                 console.error error.reason
 
-            # if result.errors
-            #     Session.set('tasksAddErrors', result.errors)
-
-            # if result._id
-                # console.log result._id
-                # FlowRouter.reload()
-
-# Template.tasksItem.helpers
-#     getUsername: (userId) ->
-#         user = Meteor.users.findOne(userId)
-#         if user
-#             user.profile.username
-#         else
-#             'Не найден'
+            if result.errors
+                console.error result.errors.error
+                # Session.set('tasksAddErrors', result.errors)
