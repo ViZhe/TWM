@@ -19,15 +19,7 @@ template(name="projectsAdd")
                     .col.w2
                         label.c-form__label Участники
                             span.c-form__error {{errorMessage 'members'}}
-                            input.g-hide(name="membersField")
-                            .c-typeahead
-                                input.c-form__field.js-typeahead__result(value="Участники не выбраны.", disabled)
-                                a.c-btn.c-btn_no-link.c-btn_color_redsoft.c-typeahead__btn(href="#") Выбрать участников
-                                .c-typeahead__list
-                                    each usersList
-                                        label.c-typeahead__item
-                                            input.js-typeahead__input(type="checkbox", name="members" value="#{_id}" )
-                                            span #{profile.username}
+                            select.c-form__field.js-sumoselect__members(name="members", multiple)
                         
                     .col.w1                    
                         button.c-btn.c-btn_color_green Создать проект

@@ -19,46 +19,20 @@ template(name="tasksAdd")
                     .col.w2
                         .c-form__label Проект
                             span.c-form__error {{errorMessage 'projectId'}}
-                            input.g-hide(name="projectIdField", class="{{errorClass 'projectId'}}")
-                            .c-typeahead
-                                input.c-form__field.js-typeahead__result(value="Проект не выбран.", disabled)
-                                a.c-btn.c-btn_no-link.c-btn_color_redsoft.c-typeahead__btn(href="#") Выбрать проект
-                                .c-typeahead__list(data-name="projectId")
-                                    if projectsList
-                                        each projectsList
-                                            label.c-typeahead__item
-                                                input.js-typeahead__input(type="radio", name="projectId" value="#{_id}" )
-                                                span.js-typeahead__item #{title}
-                                    else
-                                        .c-typeahead__no-result: a(href="projects/add") Создать проект
+                            select.c-form__field.js-sumoselect__projectId(name="projectId")
                                         
                         .c-form__label Исполнитель
                             span.c-form__error {{errorMessage 'executorId'}}
-                            input.g-hide(name="executorIdField")
-                            .c-typeahead
-                                input.c-form__field.js-typeahead__result(value="Исполнитель не выбран.", disabled)
-                                a.c-btn.c-btn_no-link.c-btn_color_redsoft.c-typeahead__btn(href="#") Выбрать исполнителя
-                                .c-typeahead__list
-                                    each usersList
-                                        label.c-typeahead__item
-                                            input.js-typeahead__input(type="radio", name="executorId" value="#{_id}" )
-                                            span.js-typeahead__item #{profile.username}
+                            select.c-form__field.js-sumoselect__executorId(name="executorId")                           
                                         
                         label.c-form__label Соисполнители
                             span.c-form__error {{errorMessage 'coExecutor'}}
-                            input.g-hide(name="coExecutorField")
-                            .c-typeahead
-                                input.c-form__field.js-typeahead__result(value="Соисполнители не выбраны.", disabled)
-                                a.c-btn.c-btn_no-link.c-btn_color_redsoft.c-typeahead__btn(href="#") Выбрать соисполнителей
-                                .c-typeahead__list
-                                    each usersList
-                                        label.c-typeahead__item
-                                            input.js-typeahead__input(type="checkbox", name="coExecutor" value="#{_id}" )
-                                            span #{profile.username}
+                            select.c-form__field.js-sumoselect__coExecutor(name="coExecutor", multiple)
+                                
                         .row
                             .col.w2
                                 label.c-form__label Приоритет
-                                    select.c-form__field(name="priority")
+                                    select.c-form__field.js-sumoselect__priority(name="priority")
                                         option(value="high") Высокий
                                         option(value="medium", selected) Средний
                                         option(value="low") Низкий

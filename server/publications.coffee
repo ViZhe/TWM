@@ -26,6 +26,23 @@ Meteor.publish 'tasksAdd', () ->
                 'profile.username': 1
     ]
 
+Meteor.publish 'tasksEdit', (taskId) ->
+    [
+        Tasks.find $and: [
+            {_id: taskId}
+            {userId: @userId}
+        ]
+
+        Projects.find $or: [
+            {members: $all: [@userId]}
+            {userId: @userId}
+        ]
+
+        Meteor.users.find {},
+            fields:
+                'profile.username': 1
+    ]
+
 Meteor.publish 'tasksItem', (taskId) ->
     task = Tasks.findOne({_id: taskId})
 

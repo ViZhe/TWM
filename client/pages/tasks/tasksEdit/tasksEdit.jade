@@ -1,0 +1,48 @@
+
+template(name="tasksEdit")
+    
+    with task
+        section.tasksAdd.c-island
+            .row: .col.w1
+                .c-island__title Редактирование задачи
+                form.c-form
+                    .row
+                        .col.w1
+                        .col.w2
+                            label.c-form__label
+                                | Название
+                                span.c-form__error {{errorMessage 'title'}}
+                                input.c-form__field(name="title", value="#{title}" class="{{errorClass 'title'}}")
+                            label.c-form__label
+                                | Описание
+                                span.c-form__error {{errorMessage 'description'}}
+                                textarea.c-form__field.c-form__field_textarea(name="description", rows="10", class="{{errorClass 'description'}}") #{description}
+
+                        .col.w2
+                            .c-form__label Проект
+                                span.c-form__error {{errorMessage 'projectId'}}
+                                select.c-form__field.js-sumoselect__projectId(name="projectId")
+                                            
+                            .c-form__label Исполнитель
+                                span.c-form__error {{errorMessage 'executorId'}}
+                                select.c-form__field.js-sumoselect__executorId(name="executorId")
+                                            
+                            label.c-form__label Соисполнители
+                                span.c-form__error {{errorMessage 'coExecutor'}}
+                                select.c-form__field.js-sumoselect__coExecutor(name="coExecutor", multiple)
+                                    
+                            .row
+                                .col.w2
+                                    label.c-form__label Приоритет
+                                        select.c-form__field.js-sumoselect__priority(name="priority")
+                                            option(value="high", selected="{{activePriority 'high'}}") Высокий
+                                            option(value="medium", selected="{{activePriority 'medium'}}") Средний
+                                            option(value="low", selected="{{activePriority 'low'}}") Низкий
+                                .col.w2
+                                    label.c-form__label Крайний срок
+                                        input.c-form__field.js-datepicker(name="deadline", value="{{getDateText deadline}}" placeholder="{{getDateText deadline}}", data-datepicker="true", data-activedate="#{deadline}" data-position="top right", autocomplete="off", spellcheck="off")
+                            
+                        .col.w1                    
+                            button.c-btn.c-btn_color_green.js-tasks-add__btn Сохранить изменения
+        
+template(name="tasksEditSub")

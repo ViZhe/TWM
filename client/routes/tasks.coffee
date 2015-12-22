@@ -31,6 +31,23 @@ tasksRoutes.route '/add',
 
 
 
+tasksRoutes.route '/edit/:_id',
+    name: 'tasksEdit'
+
+    subscriptions: (params, queryParams) ->
+        @register 'tasksEdit', Meteor.subscribe('tasksEdit', params._id)
+
+    action: (params) ->
+        FlowRouter.subsReady 'tasksEdit', ->
+            if Tasks.findOne()
+                BlazeLayout.render 'application',
+                    main: 'tasksEdit'
+                    sub: 'tasksEditSub'
+            else
+                BlazeLayout.render 'notFound'
+
+
+
 tasksRoutes.route '/:_id',
     name: 'tasksItem'
 

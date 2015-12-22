@@ -34,6 +34,9 @@ addZero = (num) ->
     i = if num < 10 then '0' + num else num
 
 getDate = (time, type) ->
+    if !time
+        return
+
     fullDate = new Date(time)
 
     Year = fullDate.getFullYear()

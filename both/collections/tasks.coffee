@@ -85,6 +85,12 @@ Meteor.methods
             return {
                 errors: errors
             }
+        if deadline = attr.deadline
+            console.log date
+            date = deadline.split('.')
+            console.log date
+            attr.deadline = new Date date[2], date[1] - 1, date[0]
+            console.log attr.deadline
 
         task = _.extend(attr,
             userId: Meteor.userId()

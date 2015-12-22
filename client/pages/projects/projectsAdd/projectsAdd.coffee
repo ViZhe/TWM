@@ -3,6 +3,15 @@ Template.projectsAdd.onCreated ->
     Session.set 'projectsAddErrors', {}
     return
 
+Template.projectsAdd.rendered = ->
+    membersList = $('.js-sumoselect__members').SumoSelect(
+        placeholder: 'Участники не выбраны.'
+        selectAll: true
+    )
+    Meteor.users.find(_id: $ne: Meteor.userId()).forEach (user) ->
+        membersList.sumo.add(user._id, user.profile.username)
+    membersList.sumo.unSelectAll()
+    return
 
 Template.projectsAdd.helpers
     errorMessage: (field) ->
@@ -16,35 +25,13 @@ Template.projectsAdd.helpers
 
 
 Template.projectsAdd.events
-    'click .c-typeahead__btn': (e, template) ->
-        e.preventDefault()
-        parent = $(e.target).parent()
-        if !parent.hasClass 'c-typeahead_open'
-            $('.c-typeahead_open').removeClass 'c-typeahead_open'
-
-        parent.toggleClass 'c-typeahead_open'
-
-    'click .js-typeahead__item': (e, template) ->
-        $('.c-typeahead_open').removeClass 'c-typeahead_open'
-
-    'click .js-typeahead__input': (e, template) ->
-        name = ''
-        $(e.target).parentsUntil('.c-typeahead').find(':checked').map (i, it) ->
-            if !!name
-                name += ', '
-            name += $(it).next().text()
-
-        $(e.target).parentsUntil('.c-form__label')
-            .find('.js-typeahead__result').val name
-        $(e.target).attr('checked', true)
-
     'submit form': (e, template) ->
         e.preventDefault()
 
         task =
             title: template.find('[name=title]').value
             description: template.find('[name=description]').value
-            members: template.findAll('[name=members]:checked').map (item) -> $(item).val()
+            members: template.findAll('[name=members] :selected').map (item) -> $(item).val()
 
         Meteor.call 'projectInsert', task, (error, result) ->
             if error

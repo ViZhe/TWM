@@ -19,7 +19,10 @@ template(name="tasksItem")
 template(name="tasksItemSub")
     with task
         .c-island
-            .c-island__title Информация о задаче
+            .c-island__title
+                | Информация о задаче
+                if isCreator
+                    a.c-island__edit(href="/tasks/edit/#{_id}", title="Редактировать задачу")
             .p-tasks-item-sub
                 .p-tasks-item-sub__key Статус
                 .p-tasks-item-sub__value {{getStatusText status}}
@@ -34,9 +37,9 @@ template(name="tasksItemSub")
                 .p-tasks-item-sub__value {{getProjectLink projectId}}
                 if deadline
                     .p-tasks-item-sub__key Крайний срок
-                    .p-tasks-item-sub__value #{deadline}
+                    .p-tasks-item-sub__value {{getDateText deadline}}
                 .p-tasks-item-sub__key Приоритет
-                .p-tasks-item-sub__value {{getPriorityText  priority}}
+                .p-tasks-item-sub__value {{getPriorityText priority}}
                 .p-tasks-item-sub__key Дата создания
                 .p-tasks-item-sub__value {{getDateText createdAt}}
 
@@ -47,8 +50,7 @@ template(name="tasksItemSub")
                     if isCreator
                         //- | Это создатель
                         if isStatus 'new' 'work'
-                            .p-tasks-item-sub__value: a.c-btn.c-btn_color_blue.c-btn_block(href="edit") Редактировать
-                            .p-tasks-item-sub__value: .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="cancel", title="Поменять статус задачи на: Отменена") Отменить задачу
+                            .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="cancel", title="Поменять статус задачи на: Отменена") Отменить задачу
                         if isStatus 'done'
                             .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="complete", title="Поменять статус задачи на: Завершена") Принять результат
                             .c-btn.c-btn_color_blue.c-btn_block.js-task-item__status-control(data-status="work", title="Отправить на доработку") Отправить на доработку

@@ -8,6 +8,27 @@ Template.tasksAdd.rendered = ->
         minDate: new Date()
         autoClose: true
     )
+    projectsList = $('.js-sumoselect__projectId').SumoSelect(
+        placeholder: 'Проект не выбран.'
+    )
+    projectsList.sumo.add('', 'Проект не выбран.')
+    Projects.find().forEach (project) ->
+        projectsList.sumo.add(project._id, project.title)
+
+    $('.js-sumoselect__priority').SumoSelect(
+    )
+    executorList = $('.js-sumoselect__executorId').SumoSelect(
+        placeholder: 'Исполнитель не выбран.'
+    )
+    coexecutorList = $('.js-sumoselect__coExecutor').SumoSelect(
+        placeholder: 'Соисполнители не выбраны.'
+        selectAll: true
+    )
+    executorList.sumo.add('', 'Исполнитель не выбран.')
+    Meteor.users.find().forEach (user) ->
+        executorList.sumo.add(user._id, user.profile.username)
+        coexecutorList.sumo.add(user._id, user.profile.username)
+    coexecutorList.sumo.unSelectAll()
     return
 
 Template.tasksAdd.helpers
@@ -17,40 +38,9 @@ Template.tasksAdd.helpers
     errorClass: (field) ->
         if !!Session.get('tasksAddErrors')[field] then 'c-form__field_invalid'
 
-    projectsList: () ->
-        Projects.find()
-
-    usersList: () ->
-        Meteor.users.find()
-
 Template.tasksAdd.events
-    'click .c-typeahead__btn': (e, template) ->
-        e.preventDefault()
-        parent = $(e.target).parent()
-        if !parent.hasClass 'c-typeahead_open'
-            $('.c-typeahead_open').removeClass 'c-typeahead_open'
-
-        parent.toggleClass 'c-typeahead_open'
-
-    'click .js-typeahead__item': (e, template) ->
-        $('.c-typeahead_open').removeClass 'c-typeahead_open'
-
-    'click .js-typeahead__input': (e, template) ->
-        # e.preventDefault()
-        name = ''
-        $(e.target).parentsUntil('.c-typeahead').find(':checked').map (i, it) ->
-            if !!name
-                name += ', '
-            name += $(it).next().text()
-
-        $(e.target).parentsUntil('.c-form__label')
-            .find('.js-typeahead__result').val name
-        $(e.target).attr('checked', true)
-
     'submit form': (e, template) ->
         e.preventDefault()
-
-    'click .js-tasks-add__btn': (e, template) ->
 
         executorIdCall = template.find('[name=executorId]:checked')
         projectIdCall = template.find('[name=projectId]:checked')
@@ -58,12 +48,12 @@ Template.tasksAdd.events
             title: template.find('[name=title]').value
             description: template.find('[name=description]').value
             priority: template.find('[name=priority]').value
-            executorId: executorIdCall && executorIdCall.value || ''
-            coExecutor: template.findAll('[name=coExecutor]:checked').map (item) -> $(item).val()
+            executorId: template.find('[name=executorId]').value
+            coExecutor: template.findAll('[name=coExecutor] :selected').map (item) -> $(item).val()
             deadline: template.find('[name=deadline]').value
-            projectId: projectIdCall && projectIdCall.value || ''
+            projectId: template.find('[name=projectId]').value
 
-
+        # console.log task
         Meteor.call 'taskInsert', task, (error, result) ->
             if error
                 console.error error.reason
