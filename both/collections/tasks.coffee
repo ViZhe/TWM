@@ -1,6 +1,29 @@
 
 @Tasks = new Mongo.Collection 'tasks'
 
+
+taskCheck = (attr) ->
+    check(Meteor.userId(), String)
+    check(attr,
+        title: String
+        description: String
+        priority: Match.OneOf('1', '2', '3')
+
+        executorId: String
+        coExecutor: Match.Optional Match.Where (x) ->
+            check(x, Array)
+            x.forEach (id) ->
+                check(id, String)
+                return
+            return true
+
+        # checklist
+        deadline: Match.Optional String
+        projectId: String
+    )
+    return
+
+
 validateTaskAttr = (attr) ->
     errors =
         countErrors: 0
@@ -61,24 +84,7 @@ validateTaskUpateStatus = (options) ->
 
 Meteor.methods
     taskInsert: (attr) ->
-        check(Meteor.userId(), String)
-        check(attr,
-            title: String
-            description: String
-            priority: Match.OneOf('high', 'medium', 'low')
-
-            executorId: String
-            coExecutor: Match.Optional Match.Where (x) ->
-                check(x, Array)
-                x.forEach (id) ->
-                    check(id, String)
-                    return
-                return true
-
-            # checklist
-            deadline: Match.Optional String
-            projectId: String
-        )
+        taskCheck attr
 
         errors = validateTaskAttr attr
         if errors.countErrors
@@ -86,11 +92,8 @@ Meteor.methods
                 errors: errors
             }
         if deadline = attr.deadline
-            console.log date
             date = deadline.split('.')
-            console.log date
             attr.deadline = new Date date[2], date[1] - 1, date[0]
-            console.log attr.deadline
 
         task = _.extend(attr,
             userId: Meteor.userId()
@@ -105,8 +108,33 @@ Meteor.methods
             _id: taskId
         }
 
-    taskUpdate: (attr) ->
-        console.log attr
+    taskUpdate: (taskId, attr) ->
+        taskCheck attr
+        thisTask = Tasks.findOne(taskId)
+        check(Meteor.userId(), thisTask.userId)
+
+        errors = validateTaskAttr attr
+        if errors.countErrors
+            return {
+                errors: errors
+            }
+        if deadline = attr.deadline
+            date = deadline.split('.')
+            attr.deadline = new Date date[2], date[1] - 1, date[0]
+
+        task = _.extend(attr,
+            status: 'new'
+        )
+
+        Tasks.update {_id: taskId}, $set: task
+
+        if thisTask.projectId != task.projectId
+            Projects.update {_id: thisTask.projectId}, $inc: 'counters.tasks': -1
+            Projects.update {_id: task.projectId}, $inc: 'counters.tasks': 1
+
+        return {
+            _id: taskId
+        }
 
     taskUpateStatus: (options) ->
         check(options,

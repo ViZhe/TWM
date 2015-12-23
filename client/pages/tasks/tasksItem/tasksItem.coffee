@@ -11,11 +11,11 @@ Template.tasksItemSub.helpers
 
     getPriorityText: (priority) ->
         switch priority
-            when 'high'
+            when '1'
                 'Высокий'
-            when 'medium'
+            when '2'
                 'Средний'
-            when 'low'
+            when '3'
                 'Низкий'
 
     getStatusText: (status) ->

@@ -42,8 +42,6 @@ Template.tasksAdd.events
     'submit form': (e, template) ->
         e.preventDefault()
 
-        executorIdCall = template.find('[name=executorId]:checked')
-        projectIdCall = template.find('[name=projectId]:checked')
         task =
             title: template.find('[name=title]').value
             description: template.find('[name=description]').value
@@ -53,7 +51,6 @@ Template.tasksAdd.events
             deadline: template.find('[name=deadline]').value
             projectId: template.find('[name=projectId]').value
 
-        # console.log task
         Meteor.call 'taskInsert', task, (error, result) ->
             if error
                 console.error error.reason

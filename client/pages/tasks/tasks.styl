@@ -1,4 +1,66 @@
 
+
+.p-tasks__row
+    display flex
+    margin 0 -15px
+    padding 5px 15px
+
+    &:nth-of-type(2n)
+        background-color rgba($graylight, .25)
+
+.p-tasks__row_head
+    font-weight 700
+
+.p-tasks__row_priority_high
+.p-tasks__row_priority_medium
+.p-tasks__row_priority_low
+.p-tasks__row_priority_no
+    &::before
+        display block
+        margin-top 5px
+        margin-right 10px
+        size 10px
+        background-color red
+        content ''
+
+        border-radius(50%)
+
+.p-tasks__row_priority
+    &_high::before
+        background-color $red
+
+    &_medium::before
+        background-color $yellow
+
+    &_low::before
+        background-color $green
+
+    &_no::before
+        background-color $purple
+
+.p-tasks__title
+    flex 1
+
+.p-tasks__title a
+    display block
+
+.p-tasks__title_head
+    padding-left 20px
+
+.p-tasks__deadline
+    flex 0 150px
+    padding 0 10px
+    text-align center
+
+.p-tasks__executor
+    flex 0 200px
+    padding-left 10px
+    text-align right
+
+
+
+
+
 .p-tasks-sub__item
     display flex
     justify-content space-between

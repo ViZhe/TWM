@@ -51,14 +51,36 @@ Template.tasksEdit.rendered = ->
 Template.tasksEdit.helpers
     errorMessage: (field) ->
         Session.get('tasksEditErrors')[field]
-        ''
 
     errorClass: (field) ->
         if !!Session.get('tasksEditErrors')[field] then 'c-form__field_invalid'
+
+    task: () ->
+        Tasks.findOne()
 
     activePriority: (name) ->
         if name == @priority then 'selected'
 
 
-# Template.tasksEdit.events
-    # TODO: доделать отправку
+Template.tasksEdit.events
+    'submit form': (e, template) ->
+        e.preventDefault()
+
+        task =
+            title: template.find('[name=title]').value
+            description: template.find('[name=description]').value
+            priority: template.find('[name=priority]').value
+            executorId: template.find('[name=executorId]').value
+            coExecutor: template.findAll('[name=coExecutor] :selected').map (item) -> $(item).val()
+            deadline: template.find('[name=deadline]').value
+            projectId: template.find('[name=projectId]').value
+
+        Meteor.call 'taskUpdate', @_id, task, (error, result) ->
+            if error
+                console.error error.reason
+
+            if result.errors
+                Session.set('tasksEditErrors', result.errors)
+
+            if result._id
+                FlowRouter.go 'tasksItem', _id: result._id

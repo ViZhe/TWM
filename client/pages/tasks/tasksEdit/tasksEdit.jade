@@ -1,13 +1,11 @@
 
-template(name="tasksEdit")
-    
+template(name="tasksEdit")    
     with task
-        section.tasksAdd.c-island
+        section.tasksE.c-island
             .row: .col.w1
                 .c-island__title Редактирование задачи
                 form.c-form
                     .row
-                        .col.w1
                         .col.w2
                             label.c-form__label
                                 | Название
@@ -35,9 +33,9 @@ template(name="tasksEdit")
                                 .col.w2
                                     label.c-form__label Приоритет
                                         select.c-form__field.js-sumoselect__priority(name="priority")
-                                            option(value="high", selected="{{activePriority 'high'}}") Высокий
-                                            option(value="medium", selected="{{activePriority 'medium'}}") Средний
-                                            option(value="low", selected="{{activePriority 'low'}}") Низкий
+                                            option(value="1", selected="{{activePriority '1'}}") Высокий
+                                            option(value="2", selected="{{activePriority '2'}}") Средний
+                                            option(value="3", selected="{{activePriority '3'}}") Низкий
                                 .col.w2
                                     label.c-form__label Крайний срок
                                         input.c-form__field.js-datepicker(name="deadline", value="{{getDateText deadline}}" placeholder="{{getDateText deadline}}", data-datepicker="true", data-activedate="#{deadline}" data-position="top right", autocomplete="off", spellcheck="off")
