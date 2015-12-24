@@ -2,7 +2,7 @@
 Meteor.publish 'tasks', () ->
     [
         Tasks.find {$or: [
-            {coExecutor: $all: [@userId]}
+            {coExecutorsId: $all: [@userId]}
             {executorId: @userId}
             {userId: @userId}
         ]}, sort:

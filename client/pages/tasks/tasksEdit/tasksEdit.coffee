@@ -27,24 +27,24 @@ Template.tasksEdit.rendered = ->
     executorList = $('.js-sumoselect__executorId').SumoSelect(
         placeholder: 'Исполнитель не выбран.'
     )
-    coexecutorList = $('.js-sumoselect__coExecutor').SumoSelect(
+    coExecutorsIdList = $('.js-sumoselect__coExecutorsId').SumoSelect(
         placeholder: 'Соисполнители не выбраны.'
         selectAll: true
     )
     executorList.sumo.add('', 'Исполнитель не выбран.')
     count = 1
-    coexecutorSelected = false
+    coExecutorsIdSelected = false
     Meteor.users.find().forEach (user) ->
         executorList.sumo.add(user._id, user.profile.username)
-        coexecutorList.sumo.add(user._id, user.profile.username)
+        coExecutorsIdList.sumo.add(user._id, user.profile.username)
         if user._id == thisTask.executorId
             executorList.sumo.selectItem(count)
-        if user._id in thisTask.coExecutor
-            coexecutorList.sumo.selectItem(count - 1)
-            coexecutorSelected = true
+        if user._id in thisTask.coExecutorsId
+            coExecutorsIdList.sumo.selectItem(count - 1)
+            coExecutorsIdSelected = true
         count++
-    if !coexecutorSelected
-        coexecutorList.sumo.unSelectAll()
+    if !coExecutorsIdSelected
+        coExecutorsIdList.sumo.unSelectAll()
 
     return
 
@@ -59,7 +59,7 @@ Template.tasksEdit.helpers
         Tasks.findOne()
 
     activePriority: (name) ->
-        if name == @priority then 'selected'
+        if ~~name == @priority then 'selected'
 
 
 Template.tasksEdit.events
@@ -71,9 +71,13 @@ Template.tasksEdit.events
             description: template.find('[name=description]').value
             priority: template.find('[name=priority]').value
             executorId: template.find('[name=executorId]').value
-            coExecutor: template.findAll('[name=coExecutor] :selected').map (item) -> $(item).val()
+            coExecutorsId: template.findAll('[name=coExecutorsId] :selected').map (item) -> $(item).val()
             deadline: template.find('[name=deadline]').value
             projectId: template.find('[name=projectId]').value
+
+        if deadline = task.deadline
+            date = deadline.split('.')
+            task.deadline = new Date date[2], (date[1] - 1), date[0], 3
 
         Meteor.call 'taskUpdate', @_id, task, (error, result) ->
             if error

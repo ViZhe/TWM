@@ -1,6 +1,67 @@
 
 @Tasks = new Mongo.Collection 'tasks'
 
+schemaTasks = new SimpleSchema
+    'title':
+        label: 'Название'
+        type: String
+        min: 0
+        max: 100
+    'description':
+        label: 'Описание'
+        type: String
+        min: 0
+
+    'priority':
+        label: 'Приоритет'
+        type: Number
+        allowedValues: [1, 2, 3]
+        defaultValue: 2
+    'status':
+        label: 'Статус'
+        type: String
+        allowedValues: ['new', 'work', 'done', 'complete', 'cancel']
+        defaultValue: 'new'
+    'deadline':
+        label: 'Крайний срок'
+        type: Date
+        optional: true
+
+    'projectId':
+        label: 'Проект'
+        type: String
+        regEx: SimpleSchema.RegEx.Id
+    'executorId':
+        label: 'Исполнитель'
+        type: String
+        regEx: SimpleSchema.RegEx.Id
+    'coExecutorsId':
+        label: 'Соисполнители'
+        type: [String]
+        regEx: SimpleSchema.RegEx.Id
+        optional: true
+
+    'userId':
+        label: 'Постановщик'
+        type: String
+        regEx: SimpleSchema.RegEx.Id
+        autoValue: -> if @isInsert then Meteor.userId()
+        denyUpdate: true
+
+    'createdAt':
+        label: 'Дата создания'
+        type: Date
+        autoValue: -> if @isInsert then new Date()
+        denyUpdate: true
+    'updatedAt':
+        label: 'Дата обновления'
+        type: Date
+        autoValue: -> if @isUpdate then new Date()
+        denyInsert: true
+        optional: true
+
+Tasks.attachSchema(schemaTasks)
+
 
 taskCheck = (attr) ->
     check(Meteor.userId(), String)
@@ -10,7 +71,7 @@ taskCheck = (attr) ->
         priority: Match.OneOf('1', '2', '3')
 
         executorId: String
-        coExecutor: Match.Optional Match.Where (x) ->
+        coExecutorsId: Match.Optional Match.Where (x) ->
             check(x, Array)
             x.forEach (id) ->
                 check(id, String)
@@ -84,22 +145,13 @@ validateTaskUpateStatus = (options) ->
 
 Meteor.methods
     taskInsert: (attr) ->
-        taskCheck attr
-
         errors = validateTaskAttr attr
         if errors.countErrors
             return {
                 errors: errors
             }
-        if deadline = attr.deadline
-            date = deadline.split('.')
-            attr.deadline = new Date date[2], date[1] - 1, date[0]
 
-        task = _.extend(attr,
-            userId: Meteor.userId()
-            createdAt: new Date
-            status: 'new'
-        )
+        task = attr
         taskId = Tasks.insert(task)
 
         Projects.update {_id: task.projectId}, $inc: 'counters.tasks': 1
@@ -109,28 +161,24 @@ Meteor.methods
         }
 
     taskUpdate: (taskId, attr) ->
-        taskCheck attr
         thisTask = Tasks.findOne(taskId)
         check(Meteor.userId(), thisTask.userId)
+        task = _.extend(attr,
+            status: 'new'
+        )
+        errors =
+            countErrors: 0
+        Tasks.update {_id: taskId}, $set: task, (error, result) ->
+            if error
+                context = Tasks.simpleSchema().namedContext()
+                context.invalidKeys().map (key) ->
+                    errors[key.name] = context.keyErrorMessage(key.name)
+                errors.countErrors++
 
-        errors = validateTaskAttr attr
         if errors.countErrors
             return {
                 errors: errors
             }
-        if deadline = attr.deadline
-            date = deadline.split('.')
-            attr.deadline = new Date date[2], date[1] - 1, date[0]
-
-        task = _.extend(attr,
-            status: 'new'
-        )
-
-        Tasks.update {_id: taskId}, $set: task
-
-        if thisTask.projectId != task.projectId
-            Projects.update {_id: thisTask.projectId}, $inc: 'counters.tasks': -1
-            Projects.update {_id: task.projectId}, $inc: 'counters.tasks': 1
 
         return {
             _id: taskId

@@ -28,9 +28,9 @@ template(name="tasksItemSub")
                 .p-tasks-item-sub__value {{getStatusText status}}
                 .p-tasks-item-sub__key Исполнитель
                 .p-tasks-item-sub__value {{getUserLInk executorId}}
-                if coExecutor
+                if coExecutorsId
                     .p-tasks-item-sub__key Участники
-                    .p-tasks-item-sub__value {{getUserLInk coExecutor}}                
+                    .p-tasks-item-sub__value {{getUserLInk coExecutorsId}}                
                 .p-tasks-item-sub__key Постановщик
                 .p-tasks-item-sub__value {{getUserLInk userId}}
                 .p-tasks-item-sub__key Проект

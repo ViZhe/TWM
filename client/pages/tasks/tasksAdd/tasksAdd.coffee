@@ -20,15 +20,15 @@ Template.tasksAdd.rendered = ->
     executorList = $('.js-sumoselect__executorId').SumoSelect(
         placeholder: 'Исполнитель не выбран.'
     )
-    coexecutorList = $('.js-sumoselect__coExecutor').SumoSelect(
+    coExecutorsIdList = $('.js-sumoselect__coExecutorsId').SumoSelect(
         placeholder: 'Соисполнители не выбраны.'
         selectAll: true
     )
     executorList.sumo.add('', 'Исполнитель не выбран.')
     Meteor.users.find().forEach (user) ->
         executorList.sumo.add(user._id, user.profile.username)
-        coexecutorList.sumo.add(user._id, user.profile.username)
-    coexecutorList.sumo.unSelectAll()
+        coExecutorsIdList.sumo.add(user._id, user.profile.username)
+    coExecutorsIdList.sumo.unSelectAll()
     return
 
 Template.tasksAdd.helpers
@@ -47,9 +47,13 @@ Template.tasksAdd.events
             description: template.find('[name=description]').value
             priority: template.find('[name=priority]').value
             executorId: template.find('[name=executorId]').value
-            coExecutor: template.findAll('[name=coExecutor] :selected').map (item) -> $(item).val()
+            coExecutorsId: template.findAll('[name=coExecutorsId] :selected').map (item) -> $(item).val()
             deadline: template.find('[name=deadline]').value
             projectId: template.find('[name=projectId]').value
+
+        if deadline = task.deadline
+            date = deadline.split('.')
+            task.deadline = new Date date[2], (date[1] - 1), date[0], 3
 
         Meteor.call 'taskInsert', task, (error, result) ->
             if error
