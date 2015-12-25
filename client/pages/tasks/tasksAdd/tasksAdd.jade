@@ -19,15 +19,15 @@ template(name="tasksAdd")
                         .c-form__label Проект
                             span.c-form__error {{errorMessage 'projectId'}}
                             select.c-form__field.js-sumoselect__projectId(name="projectId")
-                                        
+
                         .c-form__label Исполнитель
                             span.c-form__error {{errorMessage 'executorId'}}
-                            select.c-form__field.js-sumoselect__executorId(name="executorId")                           
-                                        
+                            select.c-form__field.js-sumoselect__executorId(name="executorId")
+
                         label.c-form__label Соисполнители
                             span.c-form__error {{errorMessage 'coExecutorsId'}}
                             select.c-form__field.js-sumoselect__coExecutorsId(name="coExecutorsId", multiple)
-                                
+
                         .row
                             .col.w2
                                 label.c-form__label Приоритет
@@ -39,6 +39,6 @@ template(name="tasksAdd")
                                 label.c-form__label Крайний срок
                                     span.c-form__error {{errorMessage 'deadline'}}
                                     input.c-form__field.js-datepicker(name="deadline", class="{{errorClass 'deadline'}}", placeholder="2016-12-31", data-position="top right", autocomplete="off", spellcheck="off")
-                        
-                    .col.w1                    
+
+                    .col.w1
                         button.c-btn.c-btn_color_green.js-tasks-add__btn Создать задачу

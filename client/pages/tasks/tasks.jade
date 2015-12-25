@@ -1,6 +1,6 @@
 
 template(name="tasks")
-    section.tasks                
+    section.tasks
         .c-island
             .c-island__title Список задач
             .p-tasks
@@ -12,21 +12,8 @@ template(name="tasks")
                     .p-tasks__row(class="{{getPriorityClass}}")
                         .p-tasks__title: a(href="{{pathFor 'tasksItem' _id=_id}}") #{title}
                         .p-tasks__deadline {{getDateText deadline}}
-                        .p-tasks__executor {{getUserLInk executorId}}                
-                
-                    
+                        .p-tasks__executor {{getUserLInk executorId}}
+
+
+
 template(name="tasksSub")
-    .c-island
-        .c-island__title
-            | Фильтр задач
-            a.c-island__settings(href="")
-        .p-tasks-sub__list
-            .p-tasks-sub__item
-                .p-tasks-sub__name: a(href="") Мой первый проект
-                .p-tasks-sub__count 1
-            .p-tasks-sub__item
-                .p-tasks-sub__name: a(href="") Мой второй проект
-                .p-tasks-sub__count 24241
-            .p-tasks-sub__item
-                .p-tasks-sub__name: a(href="") Мой третий проект
-                .p-tasks-sub__count 22

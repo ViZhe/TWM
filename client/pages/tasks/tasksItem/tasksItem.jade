@@ -7,13 +7,14 @@ template(name="tasksItem")
                 .p-tasks-item__description.c-text
                     +markdown
                         #{description}
-                        
+
                 .p-tasks-item__checklist
                     | тут чеклист
             .c-island
                 .c-island__title Комментарии
-                //- if завершена или отменена - запретить новые комменты  
+                //- if завершена или отменена - запретить новые комменты
                 +comments
+
 
 
 template(name="tasksItemSub")
@@ -30,7 +31,7 @@ template(name="tasksItemSub")
                 .p-tasks-item-sub__value {{getUserLInk executorId}}
                 if coExecutorsId
                     .p-tasks-item-sub__key Участники
-                    .p-tasks-item-sub__value {{getUserLInk coExecutorsId}}                
+                    .p-tasks-item-sub__value {{getUserLInk coExecutorsId}}
                 .p-tasks-item-sub__key Постановщик
                 .p-tasks-item-sub__value {{getUserLInk userId}}
                 .p-tasks-item-sub__key Проект
@@ -41,7 +42,7 @@ template(name="tasksItemSub")
                 .p-tasks-item-sub__key Приоритет
                 .p-tasks-item-sub__value {{getPriorityText priority}}
                 .p-tasks-item-sub__key Дата создания
-                .p-tasks-item-sub__value {{getDateText createdAt}}
+                .p-tasks-item-sub__value {{getDateFullText createdAt}}
 
         if isStatusControl
             .c-island

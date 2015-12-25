@@ -30,44 +30,8 @@ Template.registerHelper 'getProjectLink', (projectId) ->
 
 
 
-addZero = (num) ->
-    i = if num < 10 then '0' + num else num
-
-getDate = (time, type) ->
-    if !time
-        return
-
-    fullDate = new Date(time)
-
-    Year = fullDate.getFullYear()
-    Month = fullDate.getMonth() + 1
-    Day = fullDate.getDate()
-    Hours = fullDate.getHours()
-    Minutes = fullDate.getMinutes()
-
-    date = Year + '-' + addZero(Month) + '-' + addZero(Day)
-    time = addZero(Hours) + ':' + addZero(Minutes)
-    if type == 'full'
-        date + ' ' + time
-    else
-        date
-
 Template.registerHelper 'getDateText', (time) ->
-    getDate(time)
+    moment(time).format('L')
 
 Template.registerHelper 'getDateFullText', (time) ->
-    getDate(time, 'full')
-
-    # Человеко-понятные даты: 2 дня назад, через 21 день, через 2 часа.
-    # now = new Date().getTime()
-    # time = new Date(time).getTime()
-    # diff = now - time
-    # console.log now
-    # console.log time
-    # console.log diff
-    # timeIt = Math.abs(diff) / 1000 / 60 / 60 / 24
-    # timeHour = Math.floor(timeIt)
-    # if diff > 0
-    #     timeHour + ' дней' + ' назад'
-    # else
-    #     'через' + timeHour + ' дней'
+    moment(time).format('L [в] HH:mm')

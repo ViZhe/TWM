@@ -15,11 +15,11 @@ template(name="projectsAdd")
                             | Описание
                             span.c-form__error {{errorMessage 'description'}}
                             input.c-form__field(name="description", class="{{errorClass 'description'}}")
-                
+
                     .col.w2
                         label.c-form__label Участники
                             span.c-form__error {{errorMessage 'members'}}
                             select.c-form__field.js-sumoselect__members(name="members", multiple)
-                        
+
                     .col.w1                    
                         button.c-btn.c-btn_color_green Создать проект
