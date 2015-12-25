@@ -9,11 +9,11 @@ Template.tasks.helpers
 
     getPriorityClass: () ->
         switch @priority
-            when '1'
+            when 1
                 priority = 'high'
-            when '2'
+            when 2
                 priority = 'medium'
-            when '3'
+            when 3
                 priority = 'low'
             else
                 priority = 'no'

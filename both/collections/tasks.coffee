@@ -1,7 +1,7 @@
 
 @Tasks = new Mongo.Collection 'tasks'
 
-schemaTasks = new SimpleSchema
+Tasks.attachSchema new SimpleSchema
     'title':
         label: 'Название'
         type: String
@@ -25,6 +25,8 @@ schemaTasks = new SimpleSchema
     'deadline':
         label: 'Крайний срок'
         type: Date
+        min: -> moment().hours(0).minutes(moment().utcOffset()).seconds(0).milliseconds(0).toDate() # TODO: упростить
+        autoValue: -> if @value then moment(@value).toDate()
         optional: true
 
     'projectId':
@@ -51,108 +53,35 @@ schemaTasks = new SimpleSchema
     'createdAt':
         label: 'Дата создания'
         type: Date
-        autoValue: -> if @isInsert then new Date()
+        autoValue: -> if @isInsert then moment().toDate()
         denyUpdate: true
     'updatedAt':
         label: 'Дата обновления'
         type: Date
-        autoValue: -> if @isUpdate then new Date()
+        autoValue: -> if @isUpdate then moment().toDate()
         denyInsert: true
         optional: true
 
-Tasks.attachSchema(schemaTasks)
 
-
-taskCheck = (attr) ->
-    check(Meteor.userId(), String)
-    check(attr,
-        title: String
-        description: String
-        priority: Match.OneOf('1', '2', '3')
-
-        executorId: String
-        coExecutorsId: Match.Optional Match.Where (x) ->
-            check(x, Array)
-            x.forEach (id) ->
-                check(id, String)
-                return
-            return true
-
-        # checklist
-        deadline: Match.Optional String
-        projectId: String
-    )
-    return
-
-
-validateTaskAttr = (attr) ->
-    errors =
-        countErrors: 0
-
-    if !attr.title
-        errors.title = 'Это обязательное поле'
-        errors.countErrors++
-
-    if !attr.description
-        errors.description = 'Это обязательное поле'
-        errors.countErrors++
-
-    if !attr.projectId
-        errors.projectId = 'Это обязательное поле'
-        errors.countErrors++
-
-    if !!attr.projectId && !Projects.findOne(attr.projectId)
-        errors.projectId = 'Проект не найден.'
-        errors.countErrors++
-
-    if !attr.executorId
-        errors.executorId = 'Это обязательное поле'
-        errors.countErrors++
-
-    errors
-
-validateTaskUpateStatus = (options) ->
-    errors =
-        countErrors: 0
-
-    task = Tasks.findOne(options.taskId)
-    if !task
-        errors.error = 'Задача не найдена.'
-        errors.countErrors++
-        return errors
-
-    statusActive = task.status
-    status = options.status
-    if status == 'complete' || status == 'cancel'
-        if task.userId != Meteor.userId()
-            errors.error = 'Это действие доступно только постановщику задачи.'
-            errors.countErrors++
-
-    if status == 'work' || status == 'done'
-        if task.executorId != Meteor.userId()
-            errors.error = 'Это действие доступно только исполнителю задачи.'
-            errors.countErrors++
-
-    # Упростить
-    if (statusActive == 'new' && status != 'work' && status != 'cancel') ||
-       (statusActive == 'work' && status != 'done' && status != 'cancel') ||
-       (statusActive == 'done' && status != 'work' && status != 'complete') ||
-       (statusActive in ['complete', 'cancel'])
-        errors.error = 'Недоступный статус задачи.'
-        errors.countErrors++
-
-    errors
 
 Meteor.methods
     taskInsert: (attr) ->
-        errors = validateTaskAttr attr
+        check(Meteor.userId(), String)
+        task = attr
+
+        errors =
+            countErrors: 0
+        taskId = Tasks.insert task, (error, result) ->
+            if error
+                context = Tasks.simpleSchema().namedContext()
+                context.invalidKeys().map (key) ->
+                    errors[key.name] = context.keyErrorMessage(key.name)
+                    errors.countErrors++
+
         if errors.countErrors
             return {
                 errors: errors
             }
-
-        task = attr
-        taskId = Tasks.insert(task)
 
         Projects.update {_id: task.projectId}, $inc: 'counters.tasks': 1
 
@@ -160,8 +89,11 @@ Meteor.methods
             _id: taskId
         }
 
+
     taskUpdate: (taskId, attr) ->
         thisTask = Tasks.findOne(taskId)
+        if !thisTask then return
+
         check(Meteor.userId(), thisTask.userId)
         task = _.extend(attr,
             status: 'new'
@@ -173,12 +105,16 @@ Meteor.methods
                 context = Tasks.simpleSchema().namedContext()
                 context.invalidKeys().map (key) ->
                     errors[key.name] = context.keyErrorMessage(key.name)
-                errors.countErrors++
+                    errors.countErrors++
 
         if errors.countErrors
             return {
                 errors: errors
             }
+
+        if thisTask.projectId != task.projectId
+            Projects.update {_id: thisTask.projectId}, $inc: 'counters.tasks': -1
+            Projects.update {_id: task.projectId}, $inc: 'counters.tasks': 1
 
         return {
             _id: taskId
@@ -189,8 +125,35 @@ Meteor.methods
             taskId: String
             status: String
         )
+        thisTask = Tasks.findOne(options.taskId)
+        if !thisTask then return
 
-        errors = validateTaskUpateStatus options
+        # Вынести проверку в схему?
+        # checked start
+        errors =
+            countErrors: 0
+
+        statusActive = thisTask.status
+        status = options.status
+        if status == 'complete' || status == 'cancel'
+            if thisTask.userId != Meteor.userId()
+                errors.error = 'Это действие доступно только постановщику задачи.'
+                errors.countErrors++
+
+        if status == 'work' || status == 'done'
+            if thisTask.executorId != Meteor.userId()
+                errors.error = 'Это действие доступно только исполнителю задачи.'
+                errors.countErrors++
+
+        # Упростить
+        if (statusActive == 'new' && status != 'work' && status != 'cancel') ||
+           (statusActive == 'work' && status != 'done' && status != 'cancel') ||
+           (statusActive == 'done' && status != 'work' && status != 'complete') ||
+           (statusActive in ['complete', 'cancel'])
+            errors.error = 'Недоступный статус задачи.'
+            errors.countErrors++
+        # checked end
+
         if errors.countErrors
             return {
                 errors: errors

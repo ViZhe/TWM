@@ -4,14 +4,17 @@ Template.tasksEdit.onCreated ->
     return
 
 Template.tasksEdit.rendered = ->
+    thisTask = Tasks.findOne()
+
     datepick = $('.js-datepicker').datepicker(
         minDate: new Date()
         autoClose: true
+        dateFormat: 'yyyy-mm-dd'
+
     ).data('datepicker')
-    if deadlineDate = $('[name=deadline]').data('activedate')
+    if deadlineDate = thisTask.deadline
         datepick.selectDate(new Date(deadlineDate))
 
-    thisTask = Tasks.findOne()
     projectsList = $('.js-sumoselect__projectId').SumoSelect(
         placeholder: 'Проект не выбран.'
     )
@@ -75,15 +78,11 @@ Template.tasksEdit.events
             deadline: template.find('[name=deadline]').value
             projectId: template.find('[name=projectId]').value
 
-        if deadline = task.deadline
-            date = deadline.split('.')
-            task.deadline = new Date date[2], (date[1] - 1), date[0], 3
-
         Meteor.call 'taskUpdate', @_id, task, (error, result) ->
             if error
                 console.error error.reason
 
-            if result.errors
+            if result.errorss
                 Session.set('tasksEditErrors', result.errors)
 
             if result._id

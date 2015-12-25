@@ -45,7 +45,7 @@ getDate = (time, type) ->
     Hours = fullDate.getHours()
     Minutes = fullDate.getMinutes()
 
-    date = addZero(Day) + '.' + addZero(Month) + '.' + Year
+    date = Year + '-' + addZero(Month) + '-' + addZero(Day)
     time = addZero(Hours) + ':' + addZero(Minutes)
     if type == 'full'
         date + ' ' + time

@@ -4,7 +4,7 @@ SimpleSchema.messages
     maxString: '[label] не может быть больше [max] символов'
     minNumber: '[label] должны быть, по крайней мере [min]'
     maxNumber: '[label] не может превышать [max]'
-    minDate: '[label] должно быть больше и равно [min]'
+    minDate: '[label] должно быть больше или равен [min]'
     maxDate: '[label] не может быть после [max]'
     badDate: '[label] не является доступной датой'
     minCount: 'Вы должны указать по крайней мере [minCount] значение'

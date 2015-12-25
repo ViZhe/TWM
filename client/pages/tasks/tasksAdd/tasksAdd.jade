@@ -37,7 +37,8 @@ template(name="tasksAdd")
                                         option(value="3") Низкий
                             .col.w2
                                 label.c-form__label Крайний срок
-                                    input.c-form__field.js-datepicker(name="deadline", placeholder="19.12.2015", data-position="top right", autocomplete="off", spellcheck="off")
+                                    span.c-form__error {{errorMessage 'deadline'}}
+                                    input.c-form__field.js-datepicker(name="deadline", class="{{errorClass 'deadline'}}", placeholder="2016-12-31", data-position="top right", autocomplete="off", spellcheck="off")
                         
                     .col.w1                    
                         button.c-btn.c-btn_color_green.js-tasks-add__btn Создать задачу
