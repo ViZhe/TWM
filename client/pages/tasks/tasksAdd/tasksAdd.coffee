@@ -7,7 +7,7 @@ Template.tasksAdd.rendered = ->
     $('.js-datepicker').datepicker(
         minDate: new Date()
         autoClose: true
-        dateFormat: 'yyyy-mm-dd'
+        dateFormat: 'dd.mm.yyyy'
     )
     projectsList = $('.js-sumoselect__projectId').SumoSelect(
         placeholder: 'Проект не выбран.'
@@ -28,6 +28,7 @@ Template.tasksAdd.rendered = ->
     executorList.sumo.add('', 'Исполнитель не выбран.')
     Meteor.users.find().forEach (user) ->
         executorList.sumo.add(user._id, user.profile.username)
+        if Meteor.userId() == user._id then return
         coExecutorsIdList.sumo.add(user._id, user.profile.username)
     coExecutorsIdList.sumo.unSelectAll()
     return

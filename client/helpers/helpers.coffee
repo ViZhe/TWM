@@ -31,7 +31,7 @@ Template.registerHelper 'getProjectLink', (projectId) ->
 
 
 Template.registerHelper 'getDateText', (time) ->
-    moment(time).format('L')
+    if time then moment(time).format('L')
 
 Template.registerHelper 'getDateFullText', (time) ->
-    moment(time).format('L [в] HH:mm')
+    if time then moment(time).format('L [в] HH:mm')

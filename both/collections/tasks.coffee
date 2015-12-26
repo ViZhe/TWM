@@ -25,8 +25,8 @@ Tasks.attachSchema new SimpleSchema
     'deadline':
         label: 'Крайний срок'
         type: Date
-        min: -> moment().hours(0).minutes(moment().utcOffset()).seconds(0).milliseconds(0).toDate() # TODO: упростить
-        autoValue: -> if @value then moment(@value).toDate()
+        min: -> new Date(moment().format('YYYY-MM-DD'))
+        autoValue: -> new Date(@value)
         optional: true
 
     'projectId':
@@ -67,6 +67,10 @@ Tasks.attachSchema new SimpleSchema
 Meteor.methods
     taskInsert: (attr) ->
         check(Meteor.userId(), String)
+
+        if attr.deadline
+            attr.deadline = moment(attr.deadline, 'DD.MM.YYYY').format('YYYY-MM-DD')
+
         task = attr
 
         errors =
@@ -95,6 +99,10 @@ Meteor.methods
         if !thisTask then return
 
         check(Meteor.userId(), thisTask.userId)
+
+        if attr.deadline
+            attr.deadline = moment(attr.deadline, 'DD.MM.YYYY').format('YYYY-MM-DD')
+
         task = _.extend(attr,
             status: 'new'
         )

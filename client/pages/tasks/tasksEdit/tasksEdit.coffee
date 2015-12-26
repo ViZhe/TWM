@@ -9,7 +9,7 @@ Template.tasksEdit.rendered = ->
     datepick = $('.js-datepicker').datepicker(
         minDate: new Date()
         autoClose: true
-        dateFormat: 'yyyy-mm-dd'
+        dateFormat: 'dd.mm.yyyy'
 
     ).data('datepicker')
     if deadlineDate = thisTask.deadline
@@ -39,7 +39,9 @@ Template.tasksEdit.rendered = ->
     coExecutorsIdSelected = false
     Meteor.users.find().forEach (user) ->
         executorList.sumo.add(user._id, user.profile.username)
-        coExecutorsIdList.sumo.add(user._id, user.profile.username)
+        if Meteor.userId() != user._id
+            coExecutorsIdList.sumo.add(user._id, user.profile.username)
+
         if user._id == thisTask.executorId
             executorList.sumo.selectItem(count)
         if user._id in thisTask.coExecutorsId
@@ -82,7 +84,7 @@ Template.tasksEdit.events
             if error
                 console.error error.reason
 
-            if result.errorss
+            if result.errors
                 Session.set('tasksEditErrors', result.errors)
 
             if result._id
