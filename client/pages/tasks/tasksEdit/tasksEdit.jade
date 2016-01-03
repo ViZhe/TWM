@@ -10,7 +10,7 @@ template(name="tasksEdit")
                             label.c-form__label
                                 | Название
                                 span.c-form__error {{errorMessage 'title'}}
-                                input.c-form__field(name="title", value="#{title}" class="{{errorClass 'title'}}")
+                                input.c-form__field(name="title", value="#{title}", class="{{errorClass 'title'}}")
                             label.c-form__label
                                 | Описание
                                 span.c-form__error {{errorMessage 'description'}}

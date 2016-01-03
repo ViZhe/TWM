@@ -60,18 +60,31 @@ Meteor.publish 'tasksItem', (taskId) ->
                 _id: -1
     ]
 
+
 Meteor.publish 'projectsAll', () ->
     Projects.find {$or: [
         {members: $all: [@userId]}
         {userId: @userId}
     ]}, sort:
         title: 1
-        _id: 1
+        createdAt: -1
 
 Meteor.publish 'projectsAdd', (userId) ->
     Meteor.users.find {},
         fields:
             'profile.username': 1
+
+Meteor.publish 'projectsEdit', (projectId) ->
+    [
+        Projects.find $and: [
+            {_id: projectId}
+            {userId: @userId}
+        ]
+
+        Meteor.users.find {},
+            fields:
+                'profile.username': 1
+    ]
 
 Meteor.publish 'projectsItem', (projectId) ->
     [
@@ -81,3 +94,11 @@ Meteor.publish 'projectsItem', (projectId) ->
             fields:
                 'profile.username': 1
     ]
+
+
+Meteor.publish 'settings', () ->
+    Meteor.users.find {_id: @userId},
+        fields:
+            emails: 1
+            profile: 1
+            createdAt: 1

@@ -53,10 +53,6 @@ Template.tasksAdd.events
             deadline: template.find('[name=deadline]').value
             projectId: template.find('[name=projectId]').value
 
-        # if deadline = task.deadline
-        #     date = deadline.split('.')
-        #     task.deadline = new Date date[2], (date[1] - 1), date[0], 3
-
         Meteor.call 'taskInsert', task, (error, result) ->
             if error
                 console.error error.reason

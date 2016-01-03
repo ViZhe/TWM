@@ -1,51 +1,89 @@
 
 @Projects = new Mongo.Collection 'projects'
 
-validateProjectAttr = (attr) ->
-    errors =
-        countErrors: 0
+Projects.attachSchema new SimpleSchema
+    'title':
+        label: 'Название'
+        type: String
+        min: 0
+        max: 100
+    'description':
+        label: 'Описание'
+        type: String
+        min: 0
+    'members':
+        label: 'Участники'
+        type: [String]
+        regEx: SimpleSchema.RegEx.Id
+        optional: true
 
-    if !attr.title
-        errors.title = 'Это обязательное поле'
-        errors.countErrors++
+    'userId':
+        label: 'Постановщик'
+        type: String
+        regEx: SimpleSchema.RegEx.Id
+        autoValue: -> if @isInsert then Meteor.userId()
+        denyUpdate: true
+    'createdAt':
+        label: 'Дата создания'
+        type: Date
+        autoValue: -> if @isInsert then moment().toDate()
+        denyUpdate: true
+    'updatedAt':
+        label: 'Дата обновления'
+        type: Date
+        autoValue: -> if @isUpdate then moment().toDate()
+        denyInsert: true
+        optional: true
 
-    if !attr.description
-        errors.description = 'Это обязательное поле'
-        errors.countErrors++
-
-    errors
 
 
 Meteor.methods
     projectInsert: (attr) ->
         check(Meteor.userId(), String)
-        check(attr,
-            title: String
-            description: String
-            members: Match.Optional Match.Where (x) ->
-                check(x, Array)
-                x.forEach (id) ->
-                    check(id, String)
-                    return
-                return true
-        )
 
-        errors = validateProjectAttr attr
+        project = attr
+
+        errors =
+            countErrors: 0
+        projectId = Projects.insert project, (error, result) ->
+            if error
+                context = Projects.simpleSchema().namedContext()
+                context.invalidKeys().map (key) ->
+                    errors[key.name] = context.keyErrorMessage(key.name)
+                    errors.countErrors++
+
         if errors.countErrors
             return {
                 errors: errors
             }
 
-
-        project = _.extend(attr,
-            userId: Meteor.userId()
-            createdAt: new Date
-        )
-        projectId = Projects.insert(project)
-
         return {
             _id: projectId
         }
 
-    projectUpdate: (attr) ->
-        console.log attr
+
+    projectUpdate: (projectId, attr) ->
+        thisProject = Projects.findOne(projectId)
+        if !thisProject then return
+
+        check(Meteor.userId(), thisProject.userId)
+
+        project = attr
+
+        errors =
+            countErrors: 0
+        Projects.update {_id: projectId}, $set: project, (error, result) ->
+            if error
+                context = Projects.simpleSchema().namedContext()
+                context.invalidKeys().map (key) ->
+                    errors[key.name] = context.keyErrorMessage(key.name)
+                    errors.countErrors++
+
+        if errors.countErrors
+            return {
+                errors: errors
+            }
+
+        return {
+            _id: projectId
+        }

@@ -1,5 +1,5 @@
 
-# Только root может создавать других пользователейs
+# Только root может создавать других пользователей
 Accounts.validateNewUser ->
     isFirstUser = !Meteor.users.find().count()
     isRootUser = false

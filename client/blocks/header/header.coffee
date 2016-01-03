@@ -13,6 +13,8 @@ Template.header.helpers
                     result = 'Пользователи'
                 when 'projectsGroup'
                     result = 'Проекты'
+                when 'settingsGroup'
+                    result = 'Личный кабинет'
                 else
                     result = 'TWM'
         else

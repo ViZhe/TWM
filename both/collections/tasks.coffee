@@ -49,7 +49,6 @@ Tasks.attachSchema new SimpleSchema
         regEx: SimpleSchema.RegEx.Id
         autoValue: -> if @isInsert then Meteor.userId()
         denyUpdate: true
-
     'createdAt':
         label: 'Дата создания'
         type: Date

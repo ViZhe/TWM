@@ -15,6 +15,8 @@ template(name="projectsItemSub")
     with project
         .c-island
             .c-island__title Информация о проекте
+                if isCreator
+                    a.c-island__edit(href="/projects/edit/#{_id}", title="Редактировать проект")
             .p-tasks-item-sub
                 .p-tasks-item-sub__key Описание
                 .p-tasks-item-sub__value #{description}

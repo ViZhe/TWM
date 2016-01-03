@@ -27,23 +27,23 @@ Template.tasksEdit.rendered = ->
         count++
 
     $('.js-sumoselect__priority').SumoSelect()
-    executorList = $('.js-sumoselect__executorId').SumoSelect(
+    executorIdList = $('.js-sumoselect__executorId').SumoSelect(
         placeholder: 'Исполнитель не выбран.'
     )
     coExecutorsIdList = $('.js-sumoselect__coExecutorsId').SumoSelect(
         placeholder: 'Соисполнители не выбраны.'
         selectAll: true
     )
-    executorList.sumo.add('', 'Исполнитель не выбран.')
+    executorIdList.sumo.add('', 'Исполнитель не выбран.')
     count = 1
     coExecutorsIdSelected = false
     Meteor.users.find().forEach (user) ->
-        executorList.sumo.add(user._id, user.profile.username)
+        executorIdList.sumo.add(user._id, user.profile.username)
         if Meteor.userId() != user._id
             coExecutorsIdList.sumo.add(user._id, user.profile.username)
 
         if user._id == thisTask.executorId
-            executorList.sumo.selectItem(count)
+            executorIdList.sumo.selectItem(count)
         if user._id in thisTask.coExecutorsId
             coExecutorsIdList.sumo.selectItem(count - 1)
             coExecutorsIdSelected = true

@@ -30,6 +30,24 @@ projectsRoutes.route '/add',
                 main: 'projectsAdd'
 
 
+
+projectsRoutes.route '/edit/:_id',
+    name: 'projectsEdit'
+
+    subscriptions: (params, queryParams) ->
+        @register 'projectsEdit', Meteor.subscribe('projectsEdit', params._id)
+
+    action: (params) ->
+        FlowRouter.subsReady 'projectsEdit', ->
+            if Projects.findOne()
+                BlazeLayout.render 'application',
+                    main: 'projectsEdit'
+                    sub: 'projectsEditSub'
+            else
+                BlazeLayout.render 'notFound'
+
+
+
 projectsRoutes.route '/:_id',
     name: 'projectsItem'
 

@@ -6,3 +6,6 @@ Template.projectsItem.helpers
 Template.projectsItemSub.helpers
     project: () ->
         Projects.findOne()
+
+    isCreator: () ->
+        Meteor.userId() == @userId

@@ -1,0 +1,69 @@
+
+template(name="settings")
+    with user
+        section.p-settings
+            .c-island
+                    .row.p-settings__row
+                        .col.w2
+                            .c-island__title Фотография
+                        .col.w2
+                            .c-island__title Изменение пароля                            
+                            form#changePassword.c-form
+                                label.c-form__label
+                                    | Текущий пароль
+                                    span.c-form__error {{errorMessage 'passwordOld'}}
+                                    input.c-form__field(name="passwordOld", value="", class="{{errorClass 'passwordOld'}}", autocomplete="off", spellcheck="off")
+                                label.c-form__label
+                                    | Новый пароль
+                                    span.c-form__error {{errorMessage 'passwordNew'}}
+                                    input.c-form__field(name="passwordNew", value="", class="{{errorClass 'passwordNew'}}", autocomplete="off", spellcheck="off")
+                                label.c-form__label
+                                    | Подтверждение нового пароля
+                                    span.c-form__error {{errorMessage 'passwordNewConfirm'}}
+                                    input.c-form__field(name="passwordNewConfirm", value="", class="{{errorClass 'passwordNewConfirm'}}", autocomplete="off", spellcheck="off")                                    
+                                         
+                                button.c-btn.c-btn_color_green Изменить пароль
+                            
+                    
+                    .c-island__title Персональная информация
+                    form.c-form
+                        .row.p-settings__row
+                            .col.w2
+                                label.c-form__label
+                                    | Фамилия
+                                    span.c-form__error {{errorMessage 'lastName'}}
+                                    input.c-form__field(name="lastName", value="#{profile.lastName}", class="{{errorClass 'lastName'}}")
+                                label.c-form__label
+                                    | Имя
+                                    span.c-form__error {{errorMessage 'firstName'}}
+                                    input.c-form__field(name="firstName", value="#{profile.firstName}", class="{{errorClass 'firstName'}}")
+                                label.c-form__label
+                                    | Отчество
+                                    span.c-form__error {{errorMessage 'middleName'}}
+                                    input.c-form__field(name="middleName", value="#{profile.middleName}", class="{{errorClass 'middleName'}}")
+
+                                label.c-form__label Пол
+                                    span.c-form__error {{errorMessage 'gender'}}
+                                    select.c-form__field(name="gender")
+                                        option(value="male") мужской
+                                        option(value="female") женский
+                                        
+                                label.c-form__label День рождения
+                                    span.c-form__error {{errorMessage 'birthday'}}
+                                    input.c-form__field.js-datepicker(name="birthday", class="{{errorClass 'birthday'}}", placeholder="31.12.2016", data-datepicker="true", data-position="top right", autocomplete="off", spellcheck="off")
+                            .col.w2
+                                label.c-form__label
+                                    | Мобильный телефон
+                                    span.c-form__error {{errorMessage 'phoneMobile'}}
+                                    input.c-form__field(name="phoneMobile", value="#{profile.phone.mobile}", class="{{errorClass 'phoneMobile'}}")
+                                label.c-form__label
+                                    | Рабочий телефон
+                                    span.c-form__error {{errorMessage 'phoneWork'}}
+                                    input.c-form__field(name="phoneWork", value="#{profile.phone.work}", class="{{errorClass 'phoneWork'}}")
+                                    
+                            .col.w1                    
+                                button.c-btn.c-btn_color_green Сохранить изменения
+
+
+
+template(name="settingsSub")
