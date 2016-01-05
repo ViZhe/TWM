@@ -29,40 +29,32 @@ Template.settings.helpers
 #         Meteor.users.findOne()
 
 
+
 Template.settings.events
     'submit form#changePassword': (e, template) ->
         e.preventDefault()
 
         passwordOld = template.find('[name=passwordOld]').value
-        passwordNew = template.find('[name=passwordNew]').value
-        passwordNewConfirm = template.find('[name=passwordNewConfirm]').value
+
+        data =
+            passwordOld: if passwordOld then passwordOld
+            passwordNew: template.find('[name=passwordNew]').value
+            passwordNewConfirm: template.find('[name=passwordNewConfirm]').value
+
+        context = UserSchemaChangePassword.namedContext()
+        context.validate(data)
 
         errors =
             countErrors: 0
-
-        if !passwordOld
-            errors.passwordOld = 'Обязательное поле'
+        context.invalidKeys().map (key) ->
+            errors[key.name] = context.keyErrorMessage(key.name)
             errors.countErrors++
-
-        if !passwordNew
-            errors.passwordNew = 'Обязательное поле'
-            errors.countErrors++
-
-        if !passwordNewConfirm
-            errors.passwordNewConfirm = 'Обязательное поле'
-            errors.countErrors++
-
-        if passwordNew != passwordNewConfirm
-            errors.passwordNew = 'Пароли не совпадают.'
-            errors.passwordNewConfirm = 'Пароли не совпадают.'
-            errors.countErrors++
-
 
         Session.set('settingsErrors', errors)
         if errors.countErrors
             return
 
-        Accounts.changePassword passwordOld, passwordNew, (error) ->
+        Accounts.changePassword data.passwordOld, data.passwordNew, (error) ->
             if error
                 if error.reason == 'Incorrect password'
                     errors.passwordOld = 'Неверный пароль'
@@ -72,6 +64,7 @@ Template.settings.events
                 $('[name=passwordOld]').val('')
                 $('[name=passwordNew]').val('')
                 $('[name=passwordNewConfirm]').val('')
+                console.log 'Пароль изменен.'
                 # TODO: сообщение что пароль успешно сменился
 
             Session.set('settingsErrors', errors)

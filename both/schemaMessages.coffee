@@ -17,6 +17,7 @@ SimpleSchema.messages
     expectedArray: '[label] должен быть массивом'
     expectedObject: '[label] должен быть объект'
     expectedConstructor: '[label] должно быть [type]'
+    passwordMismatch: 'Пароли не совпадают'
     regEx: [
         {
             msg: '[label] сбой валидации регулярного выражения'
