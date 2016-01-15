@@ -26,39 +26,40 @@ template(name="settings")
                             
                     
                     .c-island__title Персональная информация
-                    form.c-form
+                    form#updateProfile.c-form
                         .row.p-settings__row
                             .col.w2
                                 label.c-form__label
                                     | Фамилия
-                                    span.c-form__error {{errorMessage 'lastName'}}
+                                    span.c-form__error {{errorMessage 'profile.lastName'}}
                                     input.c-form__field(name="lastName", value="#{profile.lastName}", class="{{errorClass 'lastName'}}")
                                 label.c-form__label
                                     | Имя
-                                    span.c-form__error {{errorMessage 'firstName'}}
+                                    span.c-form__error {{errorMessage 'profile.firstName'}}
                                     input.c-form__field(name="firstName", value="#{profile.firstName}", class="{{errorClass 'firstName'}}")
                                 label.c-form__label
                                     | Отчество
-                                    span.c-form__error {{errorMessage 'middleName'}}
+                                    span.c-form__error {{errorMessage 'profile.middleName'}}
                                     input.c-form__field(name="middleName", value="#{profile.middleName}", class="{{errorClass 'middleName'}}")
 
                                 label.c-form__label Пол
-                                    span.c-form__error {{errorMessage 'gender'}}
+                                    span.c-form__error {{errorMessage 'profile.gender'}}
                                     select.c-form__field(name="gender")
-                                        option(value="male") мужской
-                                        option(value="female") женский
+                                        option(disabled, selected) Не выбран
+                                        option(value="male", selected="{{activeGender 'male'}}") мужской
+                                        option(value="female", selected="{{activeGender 'female'}}") женский
                                         
                                 label.c-form__label День рождения
-                                    span.c-form__error {{errorMessage 'birthday'}}
+                                    span.c-form__error {{errorMessage 'profile.birthday'}}
                                     input.c-form__field.js-datepicker(name="birthday", class="{{errorClass 'birthday'}}", placeholder="31.12.2016", data-datepicker="true", data-position="top right", autocomplete="off", spellcheck="off")
                             .col.w2
                                 label.c-form__label
                                     | Мобильный телефон
-                                    span.c-form__error {{errorMessage 'phoneMobile'}}
+                                    span.c-form__error {{errorMessage 'profile.phoneMobile'}}
                                     input.c-form__field(name="phoneMobile", value="#{profile.phone.mobile}", class="{{errorClass 'phoneMobile'}}")
                                 label.c-form__label
                                     | Рабочий телефон
-                                    span.c-form__error {{errorMessage 'phoneWork'}}
+                                    span.c-form__error {{errorMessage 'profile.phoneWork'}}
                                     input.c-form__field(name="phoneWork", value="#{profile.phone.work}", class="{{errorClass 'phoneWork'}}")
                                     
                             .col.w1                    

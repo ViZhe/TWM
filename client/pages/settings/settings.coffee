@@ -10,8 +10,10 @@ Template.settings.rendered = ->
         view: 'years'
 
     ).data('datepicker')
-    if deadlineDate = 0
-        datepick.selectDate(new Date(deadlineDate))
+
+    thisTask =
+    if birthday = Meteor.users.findOne().profile.birthday
+        datepick.selectDate(new Date(birthday))
 
 
 Template.settings.helpers
@@ -23,6 +25,9 @@ Template.settings.helpers
 
     errorClass: (field) ->
         if !!Session.get('settingsErrors')[field] then 'c-form__field_invalid'
+
+    activeGender: (gender) ->
+        if gender == @profile.gender then 'selected'
 
 # Template.settingsSub.helpers
 #     user: () ->
@@ -68,3 +73,26 @@ Template.settings.events
                 # TODO: сообщение что пароль успешно сменился
 
             Session.set('settingsErrors', errors)
+
+    'submit form#updateProfile': (e, template) ->
+        e.preventDefault()
+
+        profile =
+            lastName: template.find('[name=lastName]').value
+            firstName: template.find('[name=firstName]').value
+            middleName: template.find('[name=middleName]').value
+            gender: template.find('[name=gender]').value
+            birthday: template.find('[name=birthday]').value
+            phoneMobile: template.find('[name=phoneMobile]').value
+            phoneWork: template.find('[name=phoneWork]').value
+
+        Meteor.call 'updateProfile', profile, (error, result) ->
+            if error
+                console.error error.reason
+
+            if result.errors
+                Session.set('settingsErrors', result.errors)
+
+            if result._id
+                Session.set('settingsErrors', {})
+                console.log 'Профиль обновлен.'

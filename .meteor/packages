@@ -17,7 +17,7 @@ spiderable # Генерация HTML на стороне клиента. Нуж�
 vizhe:stylus-local
 coffeescript
 mquandalle:jade
-#standard-minifiers
+#standard-minifiers-js
 
 #iron:router # Маршрутизация
 kadira:flow-router
