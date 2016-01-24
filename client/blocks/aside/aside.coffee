@@ -3,7 +3,7 @@ Template.aside.helpers
     getMyUsername: () ->
         username = Meteor.user()
         if username
-            username.profile.username
+            username.username
         else
             ''
 

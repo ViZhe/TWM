@@ -21,7 +21,7 @@ UserSchemaChangeProfile = new SimpleSchema
     'birthday':
         label: 'День рождения'
         type: Date
-        autoValue: -> new Date(@value)
+        # autoValue: -> new Date(@value)
     'phoneMobile':
         label: 'Мобильный телефон'
         type: String
@@ -32,6 +32,11 @@ UserSchemaChangeProfile = new SimpleSchema
         type: String
         regEx: /[0-9\+\(\)\-\s]+/
         optional: true
+    'email':
+        label: 'Почта'
+        type: String
+        regEx: SimpleSchema.RegEx.Email
+        optional: true
 
 UserSchema = new SimpleSchema
     _id:
@@ -41,6 +46,7 @@ UserSchema = new SimpleSchema
     emails:
         type: [Object]
     'emails.$.address':
+        label: 'Логин'
         type: String
         regEx: SimpleSchema.RegEx.Email
     'emails.$.verified':
@@ -53,6 +59,8 @@ UserSchema = new SimpleSchema
         blackbox: true
     profile:
         type: UserSchemaChangeProfile
+    username:
+        type: String
 
 Meteor.users.attachSchema UserSchema
 
@@ -80,16 +88,43 @@ Meteor.users.attachSchema UserSchema
 
 
 Meteor.methods
+    changeEmail: (loginNew) ->
+        login = [
+            address: loginNew
+            verified: false
+        ]
+
+        errors =
+            countErrors: 0
+        Meteor.users.update {_id: @userId}, $set: {emails: login}, (error, result) ->
+            if error
+                context = Meteor.users.simpleSchema().namedContext()
+                context.invalidKeys().map (key) ->
+                    errors[key.name] = context.keyErrorMessage(key.name)
+                    errors.countErrors++
+
+        if errors.countErrors
+            console.log errors
+            return {
+                errors: errors
+            }
+
+        return {
+            _id: @userId
+        }
+
+
     updateProfile: (profile) ->
         check(Meteor.userId(), String)
 
-        # console.log profile.birthday
         if profile.birthday
-            profile.birthday = moment(profile.birthday, 'DD.MM.YYYY').format('YYYY-MM-DD')
-        # console.log profile.birthday
+            profile.birthday = new Date(moment(profile.birthday, 'DD.MM.YYYY').format('YYYY-MM-DD'))
+
+        username = profile.lastName + ' ' + profile.firstName
+
         errors =
             countErrors: 0
-        Meteor.users.update {_id: Meteor.userId()}, $set: {profile: profile}, (error, result) ->
+        Meteor.users.update {_id: @userId}, $set: {profile: profile, username: username}, (error, result) ->
             if error
                 context = Meteor.users.simpleSchema().namedContext()
                 context.invalidKeys().map (key) ->
@@ -102,14 +137,5 @@ Meteor.methods
             }
 
         return {
-            _id: Meteor.userId()
+            _id: @userId
         }
-
-    #  return Meteor.users.update(Meteor.userId(), {$set: {profile: profile}});
-    # updateProfile: (profile) ->
-    #     console.log profile
-    #     console.log Meteor.userId()
-    #     profile
-    #     return {
-    #         _id: Meteor.userId()
-    #     }

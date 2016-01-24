@@ -38,9 +38,9 @@ Template.tasksEdit.rendered = ->
     count = 1
     coExecutorsIdSelected = false
     Meteor.users.find().forEach (user) ->
-        executorIdList.sumo.add(user._id, user.profile.username)
+        executorIdList.sumo.add(user._id, user.username)
         if Meteor.userId() != user._id
-            coExecutorsIdList.sumo.add(user._id, user.profile.username)
+            coExecutorsIdList.sumo.add(user._id, user.username)
 
         if user._id == thisTask.executorId
             executorIdList.sumo.selectItem(count)

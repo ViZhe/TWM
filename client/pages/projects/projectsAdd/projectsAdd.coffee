@@ -9,7 +9,7 @@ Template.projectsAdd.rendered = ->
         selectAll: true
     )
     Meteor.users.find(_id: $ne: Meteor.userId()).forEach (user) ->
-        membersList.sumo.add(user._id, user.profile.username)
+        membersList.sumo.add(user._id, user.username)
     membersList.sumo.unSelectAll()
     return
 

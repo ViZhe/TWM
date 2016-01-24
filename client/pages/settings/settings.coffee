@@ -13,7 +13,7 @@ Template.settings.rendered = ->
 
     thisTask =
     if birthday = Meteor.users.findOne().profile.birthday
-        datepick.selectDate(new Date(birthday))
+        datepick.selectDate(birthday)
 
 
 Template.settings.helpers
@@ -36,6 +36,23 @@ Template.settings.helpers
 
 
 Template.settings.events
+    'submit form#changeEmail': (e, template) ->
+        e.preventDefault()
+
+        loginNew = template.find('[name=login]').value
+
+        Meteor.call 'changeEmail', loginNew, (error, result) ->
+            if error
+                console.error error.reason
+
+            if result.errors
+                Session.set('settingsErrors', result.errors)
+
+            if result._id
+                Session.set('settingsErrors', {})
+                $('[name=login]').val('')
+                console.log 'Логин обновлен.'
+
     'submit form#changePassword': (e, template) ->
         e.preventDefault()
 
@@ -85,6 +102,7 @@ Template.settings.events
             birthday: template.find('[name=birthday]').value
             phoneMobile: template.find('[name=phoneMobile]').value
             phoneWork: template.find('[name=phoneWork]').value
+            email: template.find('[name=email]').value
 
         Meteor.call 'updateProfile', profile, (error, result) ->
             if error

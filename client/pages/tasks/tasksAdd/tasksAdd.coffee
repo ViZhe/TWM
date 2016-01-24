@@ -27,9 +27,9 @@ Template.tasksAdd.rendered = ->
     )
     executorList.sumo.add('', 'Исполнитель не выбран.')
     Meteor.users.find().forEach (user) ->
-        executorList.sumo.add(user._id, user.profile.username)
+        executorList.sumo.add(user._id, user.username)
         if Meteor.userId() == user._id then return
-        coExecutorsIdList.sumo.add(user._id, user.profile.username)
+        coExecutorsIdList.sumo.add(user._id, user.username)
     coExecutorsIdList.sumo.unSelectAll()
     return
 

@@ -2,7 +2,7 @@
 findUser = (id) ->
     user = Meteor.users.findOne(id)
     if user
-        '<a href="/users/' + id + '">' + user.profile.username + '</a>'
+        '<a href="/users/' + id + '">' + user.username + '</a>'
     else
         'Не найден'
 

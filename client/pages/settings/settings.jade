@@ -5,9 +5,20 @@ template(name="settings")
             .c-island
                     .row.p-settings__row
                         .col.w2
-                            .c-island__title Фотография
+                            .c-island__title Управлением логином                                            
+                            form#changeEmail.c-form
+                                label.c-form__label
+                                    | Текущий логин
+                                    input.c-form__field(value="{{emails.[0].address}}", disabled)
+                                label.c-form__label
+                                    | Новый логин
+                                    span.c-form__error {{errorMessage 'emails.0.address'}}
+                                    input.c-form__field(name="login" class="{{errorClass 'emails.0.address'}}")                                
+                                         
+                                button.c-btn.c-btn_color_green Изменить логин
+                                
                         .col.w2
-                            .c-island__title Изменение пароля                            
+                            .c-island__title Управление паролем
                             form#changePassword.c-form
                                 label.c-form__label
                                     | Текущий пароль
@@ -61,6 +72,10 @@ template(name="settings")
                                     | Рабочий телефон
                                     span.c-form__error {{errorMessage 'profile.phoneWork'}}
                                     input.c-form__field(name="phoneWork", value="#{profile.phone.work}", class="{{errorClass 'phoneWork'}}")
+                                label.c-form__label
+                                    | Почта для связи
+                                    span.c-form__error {{errorMessage 'profile.email'}}
+                                    input.c-form__field(name="email", value="#{profile.email}", class="{{errorClass 'email'}}")
                                     
                             .col.w1                    
                                 button.c-btn.c-btn_color_green Сохранить изменения

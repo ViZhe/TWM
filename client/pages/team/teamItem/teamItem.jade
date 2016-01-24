@@ -1,0 +1,15 @@
+
+template(name="teamItem")
+    with user
+        section.p-tasks-item
+            .c-island
+                .c-island__title Профиль: #{profile.lastName} #{profile.firstName} #{profile.middleName}
+                .b-text
+                    p #[b Пол:] {{getGender}}
+                    p #[b День рождения:] {{getDateText profile.birthday}}
+                    p #[b Возраст:] {{getAge}}
+                    if profile.phone.mobile
+                        p #[b Мобильный телефон:]  #{profile.phone.mobile}
+                    if profile.phone.work
+                        p #[b Рабочий телефон:]  #{profile.phone.work}
+                    p #[b Работает с] {{getWorkTime}}

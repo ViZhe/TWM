@@ -11,7 +11,7 @@ Meteor.publish 'tasks', () ->
 
         Meteor.users.find {},
             fields:
-                'profile.username': 1
+                'username': 1
     ]
 
 Meteor.publish 'tasksAdd', () ->
@@ -23,7 +23,7 @@ Meteor.publish 'tasksAdd', () ->
 
         Meteor.users.find {},
             fields:
-                'profile.username': 1
+                'username': 1
     ]
 
 Meteor.publish 'tasksEdit', (taskId) ->
@@ -40,7 +40,7 @@ Meteor.publish 'tasksEdit', (taskId) ->
 
         Meteor.users.find {},
             fields:
-                'profile.username': 1
+                'username': 1
     ]
 
 Meteor.publish 'tasksItem', (taskId) ->
@@ -52,7 +52,7 @@ Meteor.publish 'tasksItem', (taskId) ->
 
         Meteor.users.find {},
             fields:
-                'profile.username': 1
+                'username': 1
 
         Comments.find {taskId: taskId},
             sort:
@@ -72,7 +72,7 @@ Meteor.publish 'projectsAll', () ->
 Meteor.publish 'projectsAdd', (userId) ->
     Meteor.users.find {},
         fields:
-            'profile.username': 1
+            'username': 1
 
 Meteor.publish 'projectsEdit', (projectId) ->
     [
@@ -83,7 +83,7 @@ Meteor.publish 'projectsEdit', (projectId) ->
 
         Meteor.users.find {},
             fields:
-                'profile.username': 1
+                'username': 1
     ]
 
 Meteor.publish 'projectsItem', (projectId) ->
@@ -92,8 +92,22 @@ Meteor.publish 'projectsItem', (projectId) ->
 
         Meteor.users.find {},
             fields:
-                'profile.username': 1
+                'username': 1
     ]
+
+
+Meteor.publish 'teamAll', () ->
+    Meteor.users.find {},
+        fields:
+            'username': 1
+            'profile.position': 1
+
+Meteor.publish 'teamItem', (userId) ->
+    Meteor.users.find {_id: userId},
+        fields:
+            'username': 1
+            'createdAt': 1
+            'profile': 1
 
 
 Meteor.publish 'settings', () ->
