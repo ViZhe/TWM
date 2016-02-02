@@ -53,6 +53,7 @@ Template.settings.events
                 $('[name=login]').val('')
                 console.log 'Логин обновлен.'
 
+
     'submit form#changePassword': (e, template) ->
         e.preventDefault()
 
@@ -90,6 +91,7 @@ Template.settings.events
                 # TODO: сообщение что пароль успешно сменился
 
             Session.set('settingsErrors', errors)
+
 
     'submit form#updateProfile': (e, template) ->
         e.preventDefault()

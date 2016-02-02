@@ -41,8 +41,6 @@ Meteor.methods
     projectInsert: (attr) ->
         check(Meteor.userId(), String)
 
-        project = attr
-
         errors =
             countErrors: 0
         projectId = Projects.insert project, (error, result) ->

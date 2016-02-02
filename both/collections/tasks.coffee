@@ -86,7 +86,8 @@ Meteor.methods
                 errors: errors
             }
 
-        Projects.update {_id: task.projectId}, $inc: 'counters.tasks': 1
+        Projects.update {_id: task.projectId},
+            $inc: 'counters.tasks': 1
 
         return {
             _id: taskId
@@ -120,8 +121,11 @@ Meteor.methods
             }
 
         if thisTask.projectId != task.projectId
-            Projects.update {_id: thisTask.projectId}, $inc: 'counters.tasks': -1
-            Projects.update {_id: task.projectId}, $inc: 'counters.tasks': 1
+            Projects.update {_id: thisTask.projectId},
+                $inc: 'counters.tasks': -1
+
+            Projects.update {_id: task.projectId},
+                $inc: 'counters.tasks': 1
 
         return {
             _id: taskId
@@ -157,8 +161,8 @@ Meteor.methods
            (statusActive == 'work' && status != 'done' && status != 'cancel') ||
            (statusActive == 'done' && status != 'work' && status != 'complete') ||
            (statusActive in ['complete', 'cancel'])
-            errors.error = 'Недоступный статус задачи.'
-            errors.countErrors++
+                errors.error = 'Недоступный статус задачи.'
+                errors.countErrors++
         # checked end
 
         if errors.countErrors

@@ -4,10 +4,6 @@ template(name="projectsItem")
         section.p-tasks-item
             .c-island
                 .c-island__title Проект: #{title}
-                | лента событий
-                | типо созданн проект
-                | типо Добавлена задача
-                | типо Завершена задача
 
 
 
@@ -24,6 +20,9 @@ template(name="projectsItemSub")
                 .p-tasks-item-sub__value {{getUserLInk userId}}
                 if members
                     .p-tasks-item-sub__key Участники
-                    .p-tasks-item-sub__value {{getUserLInk members}}
+                    .p-tasks-item-sub__value {{getUserLInk members}}                    
+                if counters.tasks
+                    .p-tasks-item-sub__key Количетво задач
+                    .p-tasks-item-sub__value #{counters.tasks}
                 .p-tasks-item-sub__key Дата создания
                 .p-tasks-item-sub__value {{getDateText createdAt}}

@@ -10,7 +10,6 @@ template(name="aside")
             .b-aside-btn__list
                 a.b-aside-btn__link(href="/tasks/add") Задачу
                 a.b-aside-btn__link(href="/projects/add") Проект
-                //- a.b-aside-btn__link(href="/clients/add") Клиента
         
         .b-aside-nav            
             .b-aside-nav__item
@@ -28,13 +27,8 @@ template(name="aside")
                     .b-aside-nav__icon.b-aside-nav__icon_home
                     | Задачи
                     
-            //- .b-aside-nav__item
-            //-     a.b-aside-nav__link(class="{{isActiveRoute 'clients' class='b-aside-nav__link_active'}}", href="/clients")
-            //-         .b-aside-nav__icon.b-aside-nav__icon_home
-            //-         | Клиенты
-                    
             .b-aside-nav__item
-                a.b-aside-nav__link(class="{{isActiveRoute 'company' class='b-aside-nav__link_active'}}", href="/team")
+                a.b-aside-nav__link(class="{{isActiveRoute 'team' class='b-aside-nav__link_active'}}", href="/team")
                     .b-aside-nav__icon.b-aside-nav__icon_home
                     | Сотрудники
                      

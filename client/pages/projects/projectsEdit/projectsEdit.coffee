@@ -12,7 +12,7 @@ Template.projectsEdit.rendered = ->
     count = 1
     membersIdSelected = false
     Meteor.users.find(_id: $ne: Meteor.userId()).forEach (user) ->
-        membersList.sumo.add(user._id, user.profile.username)
+        membersList.sumo.add(user._id, user.username)
         if user._id in thisProject.members
             membersList.sumo.selectItem(count - 1)
             membersIdSelected = true
