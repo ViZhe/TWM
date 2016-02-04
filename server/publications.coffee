@@ -90,6 +90,18 @@ Meteor.publish 'projectsItem', (projectId) ->
     [
         Projects.find(projectId)
 
+
+        Tasks.find {
+            projectId: projectId
+            $or: [
+                {coExecutorsId: $all: [@userId]}
+                {executorId: @userId}
+                {userId: @userId}
+            ]
+        }, sort:
+            createdAt: -1
+            _id: -1
+
         Meteor.users.find {},
             fields:
                 'username': 1

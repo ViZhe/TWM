@@ -5,5 +5,7 @@ homeRoutes = FlowRouter.group
 homeRoutes.route '/',
     name: 'home'
     action: ->
-        BlazeLayout.render 'application',
-            main: 'home'
+        FlowRouter.go('/tasks')
+        # BlazeLayout.render 'application',
+        #     main: 'home'
+        #     sub: 'homeSub'

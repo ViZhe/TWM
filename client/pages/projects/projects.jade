@@ -3,15 +3,15 @@ template(name="projects")
     section.p-projects
         .c-island
             .c-island__title Список проектов
-            .p-projects
-                .p-projects__row.p-projects__row_head
-                    .p-tasks__title Название
-                    .p-tasks__count Задачи
+            .b-list
+                .b-list__row.b-list__row_head
+                    .b-list__title Название
+                    .b-list__count Задачи
                 each projectsList
-                    .p-projects__row
-                        .p-tasks__title: a(href="{{pathFor 'projectsItem' _id=_id}}", title="#{description}") #{title}
-                        .p-tasks__count {{getCounter counters.tasks}}
-
+                    .b-list__row
+                        .b-list__title: a(href="{{pathFor 'projectsItem' _id=_id}}", title="#{description}") #{title}
+                        .b-list__count {{getCounter counters.tasks}}
+                        
 
 
 template(name="projectsSub")

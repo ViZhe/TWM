@@ -2,12 +2,12 @@
 template(name="team")
     section
         .c-island
-            .c-island__title Список сотрудники
-            .p-team
-                .p-team__row.p-team__row_head
-                    .p-team__username Имя
-                    .p-team__position Должность
-                each teamList                        
-                    .p-team__row
-                        .p-team__username: a(href="{{pathFor 'teamItem' _id=_id}}", title="#{username}") #{username}
-                        .p-team__position Директор по персоналу
+            .c-island__title Список сотрудники                        
+            .b-list
+                .b-list__row.b-list__row_head
+                    .b-list__title Имя
+                    .b-list__position Должность
+                each teamList
+                    .b-list__row
+                        .b-list__title: a(href="{{pathFor 'teamItem' _id=_id}}", title="#{username}") #{username}
+                        .b-list__position Менаджер по продажам

@@ -1,9 +1,18 @@
 
 template(name="projectsItem")
-    with project
-        section.p-tasks-item
-            .c-island
-                .c-island__title Проект: #{title}
+    section.p-tasks-item
+        .c-island
+            .c-island__title Задачи проекта
+            .b-list
+                .b-list__row.b-list__row_head
+                    .b-list__title.b-list__title_head Название
+                    .b-list__deadline Крайний срок
+                    .b-list__executor Исполнитель
+                each tasksList
+                    .b-list__row(class="{{getListPriorityClass}}")
+                        .b-list__title: a(href="{{pathFor 'tasksItem' _id=_id}}") #{title}
+                        .b-list__deadline {{getDateText deadline}}
+                        .b-list__executor {{getUserLInk executorId}}
 
 
 
@@ -14,6 +23,8 @@ template(name="projectsItemSub")
                 if isCreator
                     a.c-island__edit(href="/projects/edit/#{_id}", title="Редактировать проект")
             .p-tasks-item-sub
+                .p-tasks-item-sub__key Название
+                .p-tasks-item-sub__value #{title}
                 .p-tasks-item-sub__key Описание
                 .p-tasks-item-sub__value #{description}
                 .p-tasks-item-sub__key Создатель

@@ -1,18 +1,18 @@
 
 template(name="tasks")
-    section.tasks
+    section.p-tasks
         .c-island
             .c-island__title Список задач
-            .p-tasks
-                .p-tasks__row.p-tasks__row_head
-                    .p-tasks__title.p-tasks__title_head Название
-                    .p-tasks__deadline Крайний срок
-                    .p-tasks__executor Исполнитель
+            .b-list
+                .b-list__row.b-list__row_head
+                    .b-list__title.b-list__title_head Название
+                    .b-list__deadline Крайний срок
+                    .b-list__executor Исполнитель
                 each tasksList
-                    .p-tasks__row(class="{{getPriorityClass}}")
-                        .p-tasks__title: a(href="{{pathFor 'tasksItem' _id=_id}}") #{title}
-                        .p-tasks__deadline {{getDateText deadline}}
-                        .p-tasks__executor {{getUserLInk executorId}}
+                    .b-list__row(class="{{getListPriorityClass}}")
+                        .b-list__title: a(href="{{pathFor 'tasksItem' _id=_id}}") #{title}
+                        .b-list__deadline {{getDateText deadline}}
+                        .b-list__executor {{getUserLInk executorId}}
 
 
 
