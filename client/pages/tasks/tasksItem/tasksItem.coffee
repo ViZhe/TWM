@@ -58,10 +58,9 @@ Template.tasksItemSub.events
             status: e.target.dataset.status
             taskId: @_id
 
-        Meteor.call 'taskUpateStatus', options, (error, result) ->
+        Meteor.call 'taskUpdateStatus', options, (error, result) ->
             if error
                 console.error error.reason
 
             if result.errors
                 console.error result.errors.error
-                # Session.set('tasksAddErrors', result.errors)

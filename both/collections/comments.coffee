@@ -1,6 +1,8 @@
 
 @Comments = new Mongo.Collection 'comments'
 
+#TODO: переделать на шему
+
 validateCommentAttr = (attr) ->
     errors =
         countErrors: 0

@@ -37,6 +37,11 @@ Projects.attachSchema new SimpleSchema
 
 
 
+Projects.deny
+    insert: -> true
+    update: -> true
+    remove: -> true
+
 Meteor.methods
     projectInsert: (attr) ->
         check(Meteor.userId(), String)

@@ -87,6 +87,11 @@ Meteor.users.attachSchema UserSchema
                 return 'passwordMismatch'
 
 
+Meteor.users.deny
+    insert: -> true
+    update: -> true
+    remove: -> true
+
 Meteor.methods
     changeEmail: (loginNew) ->
         login = [

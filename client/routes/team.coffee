@@ -13,6 +13,7 @@ teamRoutes.route '/',
         FlowRouter.subsReady 'teamAll', ->
             BlazeLayout.render 'application',
                 main: 'team'
+                sub: 'teamSub'
 
 teamRoutes.route '/:_id',
     name: 'teamItem'
@@ -25,6 +26,6 @@ teamRoutes.route '/:_id',
             if Meteor.users.findOne(params._id)
                 BlazeLayout.render 'application',
                     main: 'teamItem'
-                    # sub: 'tasksItemSub'
+                    # sub: 'teamItemSub'
             else
                 BlazeLayout.render 'notFound'

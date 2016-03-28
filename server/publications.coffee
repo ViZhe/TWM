@@ -109,10 +109,21 @@ Meteor.publish 'projectsItem', (projectId) ->
 
 
 Meteor.publish 'teamAll', () ->
-    Meteor.users.find {},
-        fields:
-            'username': 1
-            'profile.position': 1
+    user = Meteor.users.findOne({_id: @userId})
+    if user.root
+        [
+            Meteor.users.find {},
+                fields:
+                    'username': 1
+                    'profile.position': 1
+
+            Invites.find {}
+        ]
+    else
+        Meteor.users.find {},
+            fields:
+                'username': 1
+                'profile.position': 1
 
 Meteor.publish 'teamItem', (userId) ->
     Meteor.users.find {_id: userId},

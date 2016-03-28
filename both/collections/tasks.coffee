@@ -26,7 +26,7 @@ Tasks.attachSchema new SimpleSchema
         label: 'Крайний срок'
         type: Date
         min: -> new Date(moment().format('YYYY-MM-DD'))
-        autoValue: -> new Date(@value)
+        autoValue: -> if @value then new Date(@value)
         optional: true
 
     'projectId':
@@ -62,6 +62,11 @@ Tasks.attachSchema new SimpleSchema
         optional: true
 
 
+
+Tasks.deny
+    insert: -> true
+    update: -> true
+    remove: -> true
 
 Meteor.methods
     taskInsert: (attr) ->
@@ -131,7 +136,7 @@ Meteor.methods
             _id: taskId
         }
 
-    taskUpateStatus: (options) ->
+    taskUpdateStatus: (options) ->
         check(options,
             taskId: String
             status: String

@@ -1,7 +1,7 @@
 
 Template.projectsItem.helpers
     tasksList: () ->
-        Tasks.find()
+        if Tasks.findOne() then Tasks.find() else null
 
 Template.projectsItemSub.helpers
     project: () ->

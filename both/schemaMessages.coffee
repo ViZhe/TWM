@@ -18,6 +18,8 @@ SimpleSchema.messages
     expectedObject: '[label] должен быть объект'
     expectedConstructor: '[label] должно быть [type]'
     passwordMismatch: 'Пароли не совпадают'
+    accountAlreadyExists: 'Аккаунт уже существует'
+    emailAlreadyInvited: 'Приглашение уже было отправлено '
     regEx: [
         {
             msg: '[label] сбой валидации регулярного выражения'

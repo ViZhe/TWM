@@ -6,8 +6,29 @@ template(name="team")
             .b-list
                 .b-list__row.b-list__row_head
                     .b-list__title Имя
-                    .b-list__position Должность
+                    .b-list__email Email
                 each teamList
                     .b-list__row
                         .b-list__title: a(href="{{pathFor 'teamItem' _id=_id}}", title="#{username}") #{username}
-                        .b-list__position Менаджер по продажам
+                        .b-list__email: a(href="mailto:#{profile.email}") #{profile.email}
+
+
+
+template(name="teamSub")
+    .c-island
+        .c-island__title Пригласить сотрудника
+        form#sendInvite.c-form
+            .c-form__label
+                span.c-form__error {{errorMessage 'email'}}
+                input.c-form__field(name="email", class="{{errorClass 'email'}}")
+                    
+            button.c-btn.c-btn_color_green.js-tasks-add__btn Пригласить
+            
+        if invitesList           
+            .b-list
+                .b-list__row.b-list__row_head
+                    .b-list__title Активные приглашения
+                each invitesList
+                    .b-list__row
+                        .b-list__title #{email}
+                        .b-list__ Удалить
